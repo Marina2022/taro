@@ -1,0 +1,278 @@
+/* Стили регистрации */
+
+.steps-block {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid rgb(255 255 255/.3);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.steps-header {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px; /* 133.333% */
+    margin: 0;
+}
+
+.steps-subheader {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: Inter;
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 137.5% */
+
+    margin-bottom: 24px;
+}
+
+.step {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin: 24px 0;
+    /*width: 375px;*/
+}
+
+.steps-block {
+    width: 375px;
+}
+
+@media (max-width: 500px) {
+    .steps-block {
+        width: 90vw;
+    }
+
+    .step {
+        width: 100%;
+    }
+}
+
+.step.active {
+    display: flex;
+}
+
+.step.active,
+.step.completed {
+    display: flex;
+}
+
+.step.completed {
+    opacity: 0.5; /* Можно использовать для визуального отличия завершенных шагов */
+}
+
+.step.completed input:disabled,
+.step.completed select:disabled {
+    color: #999; /* Цвет текста для отключенных полей */
+    pointer-events: none; /* Полное отключение взаимодействия */
+    cursor: not-allowed; /* Указатель в виде запрещающего знака */
+}
+
+
+/*.onboarding {*/
+/*    background: */
+/*}*/
+
+.onboarding-labels {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+}
+
+.step input, select {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(3px);
+    padding: 16px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.step input::placeholder {
+    color: #fff;
+}
+
+.button {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: #FFB94C;
+    backdrop-filter: blur(3px);
+}
+
+.button-back {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 185, 76, 0.16);
+    background: rgba(255, 185, 76, 0.16);
+    backdrop-filter: blur(3px);
+    color: #FFB94C;
+
+}
+
+.gender-options {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 12px;
+    gap: 8px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(3px);
+}
+
+.gender-button {
+    width: 33%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.64);
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 137.5% */
+}
+
+.gender-button.active {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(3px);
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 137.5% */
+}
+
+.consent-container {
+    margin-top: 20px;
+}
+
+.consent-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.consent-item input {
+    margin-right: 10px;
+}
+
+
+.buttons {
+    display: flex;
+    gap: 16px;
+
+    margin-top: 40px;
+}
+
+/* Скрываем заголовок на шагах 4 и 5 */
+#step-header {
+    display: block;
+}
+
+/* Стили для контейнеров шагов */
+.steps-container,
+.step-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper-of-all-steps {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Скрываем кнопки "Назад" на первом шаге */
+.button-back {
+    display: none;
+}
+
+
+/*чекбоксы*/
+
+
+.checkbox-custom--consent {
+    display: flex;
+    gap: 8px;
+    position: relative;
+}
+
+.checkbox-custom--consent::before {
+    flex-shrink: 0;
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px; /* Квадратные углы для чекбоксов */
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-custom--consent::after {
+    content: ''; /* По умолчанию ничего не показываем */
+    display: none; /* Скрыто */
+    width: 10px;
+    height: 10px;
+    background-image: url('data:image/svg+xml,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20width%3D%2210.0957%22%20height%3D%2210.3418%22%3E%20%3Cg%3E%20%3Crect%20height%3D%2210.3418%22%20opacity%3D%220%22%20width%3D%2210.0957%22%20x%3D%220%22%20y%3D%220%22/%3E%20%3Cpath%20d%3D%22M3.82031%2010.3418C4.07227%2010.3418%204.27148%2010.2305%204.41211%2010.0137L9.94922%201.29492C10.0547%201.125%2010.0957%200.996094%2010.0957%200.861328C10.0957%200.539062%209.88477%200.328125%209.5625%200.328125C9.32812%200.328125%209.19922%200.404297%209.05859%200.626953L3.79688%209.01172L1.06641%205.4375C0.919922%205.23242%200.773438%205.15039%200.5625%205.15039C0.228516%205.15039%200%205.37891%200%205.70117C0%205.83594%200.0585938%205.98828%200.169922%206.12891L3.21094%2010.002C3.38672%2010.2305%203.56836%2010.3418%203.82031%2010.3418Z%22%20fill%3D%22%23000000%22%20fill-opacity%3D%220.85%22/%3E%20%3C/g%3E%3C/svg%3E');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 6px;
+    left: 7px;
+}
+
+.checkbox-custom--consent {
+    font-size: 14px;
+    color: rgb(255 255 255 / .8);
+    line-height: 20px;    
+}
+
+.checkbox-custom--consent__highlight {
+    color: #FFB94C;
+    opacity: .8
+}
+
+
+/* Появление галочки в активном состоянии */
+.checkbox-input:checked + .checkbox-custom--consent::after {
+    display: flex; /* Показываем только в активном состоянии */
+    justify-content: center;
+
+}
+
+.checkbox-input:checked + .checkbox-custom--consent::before {
+    background-color: #FFB94C;
+    border-color: #FFB94C;
+}
+
+
+.onboarding-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: #421F47;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
