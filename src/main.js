@@ -1,3 +1,5 @@
+let countries = []
+
 function initRegistration() {
   // Ваш код инициализации без обёртки
   const stepsContainer = document.getElementById("steps-container");
@@ -14,6 +16,14 @@ function initRegistration() {
   const step3 = document.getElementById("step3");
   const step4 = document.getElementById("step4");
 
+    
+  fetch('https://my.aspectum.app/api/countries').then(res=>res.json().then(val=>{
+    
+    populateDatalist('options-countries', val)
+    countries = val    
+  }))
+
+    
   // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
   
@@ -214,4 +224,46 @@ function initRegistration() {
 }
 
 
+function populateDatalist(id, fetchedCountries) {
+  const datalist = document.getElementById(id);
+  datalist.innerHTML = '';  
+  fetchedCountries.forEach(country => {
+    const option = document.createElement('option');
+    option.value = country.name; 
+    datalist.appendChild(option);
+  });
+}
+
+document.getElementById("country").addEventListener('input', (e)=>{
+
+  const inputIcon = document.querySelector('.select-icon--country')
+  if (e.target.value) {
+    inputIcon.style.display = 'none'
+  } else {
+    inputIcon.style.display = 'inline'
+  }
+  
+  const countryValue = e.target.value 
+  if (countryValue) {    
+    const country = countries.find(item=>item.name === countryValue)       
+    
+    if (country) {
+      fetch('https://my.aspectum.app/api/cities/?country_id=' + country.id).then(res=>res.json().then(val=>{
+        populateDatalist('options-cities', val)
+      }))  
+    }     
+  }
+})
+
+document.getElementById("city").addEventListener('input', (e)=>{
+  const inputIcon = document.querySelector('.select-icon--city')
+  if (e.target.value) {
+    inputIcon.style.display = 'none'
+  } else {
+    inputIcon.style.display = 'inline'
+  }
+})
+
 initRegistration()
+
+
