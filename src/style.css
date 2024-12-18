@@ -276,3 +276,37 @@
     top: 0;
     left: 0;
 }
+
+
+.onboarding-select option {
+    color: black;
+    margin-bottom: 20px;
+    background: rgb(213,206,215);
+    padding-block: 6px;
+}
+
+.onboarding-select {
+    height: 56px;
+    
+    color: white;    
+    /*background: #421F47;*/
+    /*background: rgb(213,206,215);*/
+    border: none;
+    outline: none;    
+    border-radius: 12px;    
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+.input-icon-container--city {
+    margin-top: 10px;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none!important;
+}
+
+.city-container {
+    margin-top: 20px;
+}

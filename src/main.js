@@ -16,9 +16,8 @@ function initRegistration() {
 
   // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
-
   
-  let currentStep = 0; // Индекс текущего шага
+  let currentStep = 2; // Индекс текущего шага
   let selectedGender = "male"; // Выбранный пол
 
   // Функция обновления видимости шагов

@@ -63,20 +63,32 @@
               <label class="onboarding-labels" for="country">
                 Страна
               </label>
-              <select id="country">
-                <option>Russia</option>
-                <option>Russia-2</option>
-                <option>Russia-3</option>
-              </select>
 
-              <label class="onboarding-labels" for="city">
-                Город
-              </label>
-              <select id="city">
-                <option>city</option>
-                <option>city-2</option>
-                <option>city-3</option>
-              </select>
+              <div class="input-icon-container ">
+                <input list="options-countries" id="country" class="text-input input-with-datalist"/>
+                <datalist id="options-countries" class="datalist">
+                  <option value="country 1"></option>
+                  <option value="country 2"></option>
+                  <option value="country 3"></option>
+                </datalist>
+                <div class="input-icon select-icon"></div>
+              </div>
+
+              <div class="city-container">
+                <label class="onboarding-labels" for="city">
+                  Город
+                </label>
+                <div class="input-icon-container input-icon-container--city">
+                  <input list="options" id="city" class="text-input input-with-datalist"/>
+                  <datalist id="options" class="datalist">
+                    <option value="город 1"></option>
+                    <option value="город 2"></option>
+                    <option value="город 3"></option>
+                  </datalist>
+                  <div class="input-icon select-icon"></div>
+                </div>
+
+              </div>
 
             </div>
 
