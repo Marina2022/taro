@@ -1,4 +1,5 @@
 let countries = []
+let birth_date = ''
 
 function initRegistration() {
   // Ваш код инициализации без обёртки
@@ -16,18 +17,18 @@ function initRegistration() {
   const step3 = document.getElementById("step3");
   const step4 = document.getElementById("step4");
 
-    
-  fetch('https://my.aspectum.app/api/countries').then(res=>res.json().then(val=>{
-    
+
+  fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
+
     populateDatalist('options-countries', val)
-    countries = val    
+    countries = val
   }))
 
-    
+
   // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
-  
-  let currentStep = 2; // Индекс текущего шага
+
+  let currentStep = 0; // Индекс текущего шага
   let selectedGender = "male"; // Выбранный пол
 
   // Функция обновления видимости шагов
@@ -130,17 +131,55 @@ function initRegistration() {
   // Функция валидации текущего шага
   function validateStep(step) {
     if (step === 0) {
-      const birthDate = document.getElementById("birth_date").value;
-      if (!birthDate) {
-        alert("Пожалуйста, введите дату рождения.");
+
+      // кол-во дней в месяцах
+      const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+      const birthMonth = document.getElementById("birth-month").value;
+      if (!birthMonth) {
+        alert("Пожалуйста, введите месяц рождения.");
         return false;
       }
+
+      const birthDay = document.getElementById("birth-day").value;
+      if (!birthDay) {
+        alert("Пожалуйста, введите день рождения.");
+        return false;
+
+      } else if (birthDay > daysInMonth[birthMonth - 1]) {  // проверяем на кол-во дней в месяце 
+        alert("Пожалуйста, введите правильный день рождения.");
+        return false;
+      }
+
+      const birthYear = document.getElementById("birth-year").value;
+      if (!birthYear) {
+        alert("Пожалуйста, введите год рождения.");
+        return false;
+      } else if (+birthYear < 1900 || +birthYear > new Date().getFullYear()) {  // проверяем год 
+        alert("Пожалуйста, введите правильный год рождения.");
+        return false;
+      }
+      
+      birth_date = `${birthDay}.${birthMonth}.${birthYear}`
+      console.log('birth_date', birth_date)
+
     } else if (step === 1) {
-      const birthTime = document.getElementById("birth_time").value;
-      if (!birthTime) {
+      const birthTimeValue = document.getElementById("birth_time").value;
+      
+      const timeArray = birthTimeValue.split(':')
+            
+      if (!birthTimeValue) {
         alert("Пожалуйста, введите время рождения.");
         return false;
+      } else if(timeArray[0] > 24) {
+        alert("Пожалуйста, введите час рождения правильно.");
+        return false;
+      } else if(timeArray[1] > 59) {
+        alert("Пожалуйста, введите минуту рождения правильно.");
+        return false;
       }
+      
+      
     } else if (step === 2) {
       const country = document.getElementById("country").value;
       const city = document.getElementById("city").value;
@@ -166,10 +205,16 @@ function initRegistration() {
       const email = document.getElementById("email").value;
       const dataConsent = document.getElementById("data_consent").checked;
 
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!email) {
         alert("Пожалуйста, введите ваш email.");
         return false;
+      } else if (!emailRegex.test(email)) {
+        alert("Пожалуйста, введите правильный email.");
+        return false;
       }
+      
+      
       if (!dataConsent) {
         alert("Пожалуйста, дайте согласие на обработку персональных данных.");
         return false;
@@ -181,7 +226,7 @@ function initRegistration() {
   // Функция отправки данных регистрации на сервер
   function submitRegistration() {
     const data = {
-      birth_date: document.getElementById("birth_date").value,
+      birth_date,
       birth_time: document.getElementById("birth_time").value,
       country: document.getElementById("country").value,
       city: document.getElementById("city").value,
@@ -192,31 +237,31 @@ function initRegistration() {
       newsletter_consent: document.getElementById("newsletter_consent").checked,
     };
 
-    // Отправляем данные на сервер - пока не отправляем
-    // fetch('https://my.aspectum.app/api/register/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     if (result.success) {
-    //       // Регистрация прошла успешно
-    //       alert('Регистрация завершена!');
-    //       // Перенаправляем пользователя на главную страницу или в личный кабинет
-    //       location.hash = '/';
-    //     } else {
-    //       // Обработка ошибок
-    //       alert('Ошибка при регистрации: ' + result.message);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.error('Ошибка:', error);
-    //   });
+    // Отправляем данные на сервер - 
+    fetch('https://my.aspectum.app/api/signup/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          // Регистрация прошла успешно
+          alert('Регистрация завершена!');
+          // Перенаправляем пользователя на главную страницу или в личный кабинет
+          location.hash = '/';
+        } else {
+          // Обработка ошибок
+          alert('Ошибка при регистрации: ' + result.message);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
 
-    console.log("На сервер отправится: ", data)
+    // console.log("На сервер отправится: ", data)
   }
 
   // Инициализация
@@ -226,15 +271,15 @@ function initRegistration() {
 
 function populateDatalist(id, fetchedCountries) {
   const datalist = document.getElementById(id);
-  datalist.innerHTML = '';  
+  datalist.innerHTML = '';
   fetchedCountries.forEach(country => {
     const option = document.createElement('option');
-    option.value = country.name; 
+    option.value = country.name;
     datalist.appendChild(option);
   });
 }
 
-document.getElementById("country").addEventListener('input', (e)=>{
+document.getElementById("country").addEventListener('input', (e) => {
 
   const inputIcon = document.querySelector('.select-icon--country')
   if (e.target.value) {
@@ -242,20 +287,20 @@ document.getElementById("country").addEventListener('input', (e)=>{
   } else {
     inputIcon.style.display = 'inline'
   }
-  
-  const countryValue = e.target.value 
-  if (countryValue) {    
-    const country = countries.find(item=>item.name === countryValue)       
-    
+
+  const countryValue = e.target.value
+  if (countryValue) {
+    const country = countries.find(item => item.name === countryValue)
+
     if (country) {
-      fetch('https://my.aspectum.app/api/cities/?country_id=' + country.id).then(res=>res.json().then(val=>{
+      fetch('https://my.aspectum.app/api/cities/?country_id=' + country.id).then(res => res.json().then(val => {
         populateDatalist('options-cities', val)
-      }))  
-    }     
+      }))
+    }
   }
 })
 
-document.getElementById("city").addEventListener('input', (e)=>{
+document.getElementById("city").addEventListener('input', (e) => {
   const inputIcon = document.querySelector('.select-icon--city')
   if (e.target.value) {
     inputIcon.style.display = 'none'
@@ -267,3 +312,12 @@ document.getElementById("city").addEventListener('input', (e)=>{
 initRegistration()
 
 
+const timeInput = document.getElementById('birth_time');
+// const im = new Inputmask('99:99');
+
+const im = new Inputmask({
+  mask: "99:99",  
+});
+
+
+im.mask(timeInput);

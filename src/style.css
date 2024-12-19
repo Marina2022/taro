@@ -3,7 +3,6 @@
 .steps-block {
     display: flex;
     flex-direction: column;
-
     border: 1px solid rgb(255 255 255/.3);
     border-radius: 20px;
     padding: 20px;
@@ -27,7 +26,6 @@
     font-style: normal;
     font-weight: 500;
     line-height: 22px; /* 137.5% */
-
     margin-bottom: 24px;
 }
 
@@ -113,7 +111,6 @@
     background: rgba(255, 185, 76, 0.16);
     backdrop-filter: blur(3px);
     color: #FFB94C;
-
 }
 
 .gender-options {
@@ -169,7 +166,6 @@
     margin-right: 10px;
 }
 
-
 .buttons {
     display: flex;
     gap: 16px;
@@ -195,8 +191,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    max-height: 100vh;
+    overflow: auto;    
 }
-
 
 /* Скрываем кнопки "Назад" на первом шаге */
 .button-back {
@@ -204,8 +201,7 @@
 }
 
 
-/*чекбоксы*/
-
+/*чекбоксы для Onboarding*/
 
 .checkbox-custom--consent {
     display: flex;
@@ -245,7 +241,7 @@
 .checkbox-custom--consent {
     font-size: 14px;
     color: rgb(255 255 255 / .8);
-    line-height: 20px;    
+    line-height: 20px;
 }
 
 .checkbox-custom--consent__highlight {
@@ -258,7 +254,6 @@
 .checkbox-input:checked + .checkbox-custom--consent::after {
     display: flex; /* Показываем только в активном состоянии */
     justify-content: center;
-
 }
 
 .checkbox-input:checked + .checkbox-custom--consent::before {
@@ -266,47 +261,80 @@
     border-color: #FFB94C;
 }
 
-
 .onboarding-overlay {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background: #421F47;
+    background: #421F47;    
     z-index: 1;
     top: 0;
     left: 0;
-}
-
-
-.onboarding-select option {
-    color: black;
-    margin-bottom: 20px;
-    background: rgb(213,206,215);
-    padding-block: 6px;
+    background-image: url('img/background.png');  
+    background-blend-mode: screen;   
 }
 
 .onboarding-select {
     height: 56px;
-    
-    color: white;    
-    /*background: #421F47;*/
-    /*background: rgb(213,206,215);*/
+    color: white;
+    background: #421F47;
     border: none;
-    outline: none;    
-    border-radius: 12px;    
+    outline: none;
+    border-radius: 12px;
     padding: 8px 12px;
     font-size: 16px;
     border: 1px solid #ccc;
+    appearance: none;
+}
+
+.input-icon-container--month {
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.onboarding-select--month {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.onboarding-select option {
+    color: black;
+    margin-bottom: 20px;
+    background: rgb(213, 206, 215);
+    padding-block: 6px;
 }
 
 .input-icon-container--city {
     margin-top: 10px;
 }
 
+/*Убираем иконку-дропдауна для инпутов с даталистом */
 input::-webkit-calendar-picker-indicator {
-    display: none!important;
+    display: none !important;
 }
 
 .city-container {
     margin-top: 20px;
+}
+
+.data-inputs-wrapper {
+    display: flex;
+    gap: 10px;    
+}
+
+.data-inputs-wrapper input {
+    width: 30%;
+    padding: 10px;
+}
+
+
+/*Убрать кнопки для инпутов type number*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Для Firefox убираем стрелки */
+input[type="number"] {
+    -moz-appearance: textfield;
 }

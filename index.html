@@ -6,6 +6,7 @@
   <title>Страница</title>
   <link rel="stylesheet" href="src/commonStyles.css">
   <link rel="stylesheet" href="src/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6/dist/inputmask.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -19,11 +20,7 @@
     </div>
 
     <h1 style="display: none;" class="title">Название</h1>
-
-
-    <button class="settings-button">
-
-    </button>
+    <button class="settings-button"></button>
 
   </header>
 
@@ -33,7 +30,7 @@
     <div class="onboarding-overlay">
       <div class="wrapper-of-all-steps">
 
-        <!-- Начались первые три шага -->
+        <!-- Первые три шага -->
 
         <div id="steps-container" class="steps-container">
           <div class="steps-block">
@@ -46,17 +43,39 @@
               Данные для расчёта натальной карты и персонального гороскопа
             </div>
             <div class="step active">
-              <label class="onboarding-labels" for="birth_date">
+              <label class="onboarding-labels" for="birth-month">
                 Дата рождения
               </label>
-              <input id="birth_date" type="date" class="text-input">
+
+              <div class="data-inputs-wrapper">
+                <div class="input-icon-container input-icon-container--month">
+                  <select required id="birth-month" class="onboarding-select onboarding-select--month">
+                    <!--                    <option value="Месяц" disabled selected class="select-placeholder">Месяц</option>-->
+                    <option value="1">Январь</option>
+                    <option value="2">Февраль</option>
+                    <option value="3">Март</option>
+                    <option value="4">Апрель</option>
+                    <option value="5">Май</option>
+                    <option value="6">Июнь</option>
+                    <option value="7">Июль</option>
+                    <option value="8">Август</option>
+                    <option value="9">Сентябрь</option>
+                    <option value="10">Октябрь</option>
+                    <option value="11">Ноябрь</option>
+                    <option value="12">Декабрь</option>
+                  </select>
+                  <div class="input-icon select-icon"></div>
+                </div>
+                <input id="birth-day" type="number" class="text-input" placeholder="День" min="1" max="31">
+                <input id="birth-year" type="number" class="text-input" placeholder="Год" maxlength="4">
+              </div>
             </div>
 
             <div class="step">
               <label class="onboarding-labels" for="birth_time">
                 Время рождения
               </label>
-              <input id="birth_time" type="time" class="text-input">
+              <input id="birth_time" type="text" placeholder="00:00"/>
             </div>
 
             <div class="step">
@@ -81,10 +100,7 @@
                   <div class="input-icon select-icon select-icon--city"></div>
                 </div>
               </div>
-
             </div>
-
-
           </div>
         </div>
         <!-- Закончились первые три шага -->
@@ -127,7 +143,7 @@
               </div>
 
               <div class="step active">
-                <label class="onboarding-labels" for="birth_date">
+                <label class="onboarding-labels" for="email">
                   Ваш E-MAIL (используется как логин)
                 </label>
                 <input id="email" type="email" class="text-input">
@@ -157,8 +173,6 @@
                     </div>
                   </label>
                 </div>
-
-
               </div>
             </div>
           </div>
