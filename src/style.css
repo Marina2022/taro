@@ -488,14 +488,18 @@ input[type="number"] {
 }
 
 .onboarding__city-input {
-    height: 56px;
-    /*color: rgb(255 255 255/0.54);*/
+    height: 56px;    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /*position: relative;*/
+    position: relative;
 }
 
+/* это инпут "Нажмите для выбора" на шаге Выбора места рожения, он сделан дивом, чтобы подсказки не всплывали */
+
+.onboarding__city-input--div {
+    color: rgb(255 255 255/0.54);
+}
 
 .onboarding__city-input {
     margin-bottom: 24px;

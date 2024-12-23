@@ -40,7 +40,7 @@ function initRegistration() {
       console.error('Ошибка:', error);
     });
 
-
+  
   // По умолчанию РФ стоит в выбранной стране, потому для нее фетчим города:
   fetch('https://my.aspectum.app/api/cities/?country_id=8').then(res => res.json().then(val => {
     populatePopularCities(val.slice(0, 5))
@@ -370,6 +370,16 @@ document.getElementById("country").addEventListener('change', (e) => {
     id: value,
     name: text
   }
+
+  // фетчим города для выбранной страны:
+  fetch('https://my.aspectum.app/api/cities/?country_id=' + value).then(res => res.json().then(val => {
+    populatePopularCities(val.slice(0, 5))
+    cities = val
+  }))
+    .catch(error => {
+      console.error('Ошибка:', error);
+    });
+
 })
 
 
