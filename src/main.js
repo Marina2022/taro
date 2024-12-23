@@ -1,5 +1,13 @@
 let countries = []
+let cities = []
 let birth_date = ''
+
+const header = document.querySelector('.header')
+const tabbar = document.querySelector('.tabbar')
+
+header.style.display = 'none'
+tabbar.style.display = 'none'
+document.body.style.overflow = 'hidden'
 
 function initRegistration() {
   // Ваш код инициализации без обёртки
@@ -12,18 +20,23 @@ function initRegistration() {
   const stepHeader = document.getElementById("step-header");
   const step3Screen = document.getElementById("step3-screen");
   const step4Screen = document.getElementById("step4-screen");
+  const step5Screen = document.getElementById("step5-screen");
   const currentStepIndicator = document.getElementById("current-step");
 
   const step3 = document.getElementById("step3");
   const step4 = document.getElementById("step4");
+  const step5 = document.getElementById("step5");
+
+  const onboardingOverlay = document.querySelector(".onboarding-overlay");
 
 
   fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
-
     populateDatalist('options-countries', val)
     countries = val
   }))
-
+    .catch(error => {
+      console.error('Ошибка:', error);
+    });
 
   // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
@@ -93,6 +106,22 @@ function initRegistration() {
       // Обновить кнопки
       backButton.style.display = "inline-block";
       nextButton.innerText = "Завершить";
+    } else if (currentStep === 5) {
+
+      // Переходим к шагу "Добро пожаловать"
+      stepsContainer.style.display = "none";
+      stepHeader.style.display = "none";
+      step3Screen.style.display = "none";
+      step4Screen.style.display = "none";
+      step5Screen.style.display = "block";
+      onboardingOverlay.classList.add('onboarding__final-step-overlay')
+
+      // Активируем шаг 4
+      step5.classList.add("active");
+
+      // Обновить кнопки
+      backButton.style.display = "none";
+      nextButton.innerText = "Далее";
     }
   };
 
@@ -159,36 +188,44 @@ function initRegistration() {
         alert("Пожалуйста, введите правильный год рождения.");
         return false;
       }
-      
-      birth_date = `${birthDay}.${birthMonth}.${birthYear}`
-      console.log('birth_date', birth_date)
+
+      birth_date = `${birthYear}-${addLeadingZero(birthMonth)}-${addLeadingZero(birthDay)}`
 
     } else if (step === 1) {
       const birthTimeValue = document.getElementById("birth_time").value;
-      
+
       const timeArray = birthTimeValue.split(':')
-            
+
       if (!birthTimeValue) {
         alert("Пожалуйста, введите время рождения.");
         return false;
-      } else if(timeArray[0] > 24) {
+      } else if (timeArray[0] > 24) {
         alert("Пожалуйста, введите час рождения правильно.");
         return false;
-      } else if(timeArray[1] > 59) {
+      } else if (timeArray[1] > 59) {
         alert("Пожалуйста, введите минуту рождения правильно.");
         return false;
       }
-      
-      
+
     } else if (step === 2) {
       const country = document.getElementById("country").value;
       const city = document.getElementById("city").value;
+
       if (!country) {
         alert("Пожалуйста, выберите страну.");
         return false;
+      } else if (!countries.find(item => item.name === country)) {
+
+        alert("Пожалуйста, выберите страну из списка");
+        return false;
       }
+
       if (!city) {
         alert("Пожалуйста, введите город.");
+        return false;
+      } else if (!cities.find(item => item.name === city)) {
+
+        alert("Пожалуйста, выберите город из списка. Если вашего города нет, выберите ближайший.");
         return false;
       }
     } else if (step === 3) {
@@ -205,7 +242,12 @@ function initRegistration() {
       const email = document.getElementById("email").value;
       const dataConsent = document.getElementById("data_consent").checked;
 
-      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      // тут + запрещен в имейле
+      // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // а тут разрешен
+      const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
       if (!email) {
         alert("Пожалуйста, введите ваш email.");
         return false;
@@ -213,8 +255,7 @@ function initRegistration() {
         alert("Пожалуйста, введите правильный email.");
         return false;
       }
-      
-      
+
       if (!dataConsent) {
         alert("Пожалуйста, дайте согласие на обработку персональных данных.");
         return false;
@@ -225,11 +266,13 @@ function initRegistration() {
 
   // Функция отправки данных регистрации на сервер
   function submitRegistration() {
+
+    const city = cities.find(item => item.name === document.getElementById("city").value)
+
     const data = {
       birth_date,
       birth_time: document.getElementById("birth_time").value,
-      country: document.getElementById("country").value,
-      city: document.getElementById("city").value,
+      city_id: city.id,
       nickname: document.getElementById("nickname").value,
       gender: selectedGender,
       email: document.getElementById("email").value,
@@ -247,21 +290,19 @@ function initRegistration() {
     })
       .then(response => response.json())
       .then(result => {
-        if (result.success) {
-          // Регистрация прошла успешно
-          alert('Регистрация завершена!');
-          // Перенаправляем пользователя на главную страницу или в личный кабинет
-          location.hash = '/';
+        if (result.status === 'User created and logged in successfully') {
+          // alert('Регистрация завершена!');          
+          // location.hash = '/';
+          currentStep = 5
+          updateSteps()
         } else {
-          // Обработка ошибок
-          alert('Ошибка при регистрации: ' + result.message);
+          // Обработка ошибок         
+          alert(result.error);
         }
       })
       .catch(error => {
         console.error('Ошибка:', error);
       });
-
-    // console.log("На сервер отправится: ", data)
   }
 
   // Инициализация
@@ -281,6 +322,7 @@ function populateDatalist(id, fetchedCountries) {
 
 document.getElementById("country").addEventListener('input', (e) => {
 
+  // скрываем иконку дропдауна, когда значение в инпуте введено 
   const inputIcon = document.querySelector('.select-icon--country')
   if (e.target.value) {
     inputIcon.style.display = 'none'
@@ -295,12 +337,17 @@ document.getElementById("country").addEventListener('input', (e) => {
     if (country) {
       fetch('https://my.aspectum.app/api/cities/?country_id=' + country.id).then(res => res.json().then(val => {
         populateDatalist('options-cities', val)
+        cities = val
       }))
+        .catch(error => {
+          console.error('Ошибка:', error);
+        });
     }
   }
 })
 
 document.getElementById("city").addEventListener('input', (e) => {
+  // скрываем иконку дропдауна, когда значение в инпуте введено 
   const inputIcon = document.querySelector('.select-icon--city')
   if (e.target.value) {
     inputIcon.style.display = 'none'
@@ -312,12 +359,15 @@ document.getElementById("city").addEventListener('input', (e) => {
 initRegistration()
 
 
+// Маска для инпута времени рождения:
 const timeInput = document.getElementById('birth_time');
-// const im = new Inputmask('99:99');
-
 const im = new Inputmask({
-  mask: "99:99",  
+  mask: "99:99",
 });
 
-
 im.mask(timeInput);
+
+// Функция - для добавления нулей, чтобы преобразовать дату в нужный формат
+function addLeadingZero(num) {
+  return num < 10 ? `0${num}` : `${num}`;
+}

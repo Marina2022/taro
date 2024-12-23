@@ -33,8 +33,8 @@
     display: none;
     flex-direction: column;
     gap: 8px;
-    margin: 24px 0;
-    /*width: 375px;*/
+    /*margin: 24px 0;*/
+    /*margin-top: 0;*/
 }
 
 .steps-block {
@@ -52,7 +52,8 @@
 }
 
 .step.active {
-    display: flex;
+    /*display: flex;*/
+    /*margin-top: 24px;*/
 }
 
 .step.active,
@@ -132,10 +133,16 @@
     border-radius: 5px;
     color: rgba(255, 255, 255, 0.64);
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 22px; /* 137.5% */
+}
+
+@media (max-width: 500px) {
+    .gender-button {
+        font-size: 12px;
+    }
 }
 
 .gender-button.active {
@@ -145,10 +152,16 @@
     backdrop-filter: blur(3px);
     color: #FFF;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 22px; /* 137.5% */
+}
+
+@media (max-width: 500px) {
+    .gender-button.active {
+        font-size: 12px;
+    }
 }
 
 .consent-container {
@@ -170,7 +183,7 @@
     display: flex;
     gap: 16px;
 
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 /* Скрываем заголовок на шагах 4 и 5 */
@@ -191,8 +204,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-height: 100vh;
-    overflow: auto;    
+    max-height: 92vh;
+    overflow: auto;
+
+    scrollbar-width: none; /* Для Firefox */
+    -ms-overflow-style: none; /* Для Internet Explorer */
+    overflow: hidden;
 }
 
 /* Скрываем кнопки "Назад" на первом шаге */
@@ -212,8 +229,8 @@
 .checkbox-custom--consent::before {
     flex-shrink: 0;
     content: '';
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 4px; /* Квадратные углы для чекбоксов */
@@ -223,6 +240,8 @@
     justify-content: center;
     position: relative;
     transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+    top: 2px;
 }
 
 .checkbox-custom--consent::after {
@@ -234,7 +253,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
-    top: 6px;
+    top: 7px;
     left: 7px;
 }
 
@@ -265,12 +284,13 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background: #421F47;    
     z-index: 1;
     top: 0;
     left: 0;
-    background-image: url('img/background.png');  
-    background-blend-mode: screen;   
+    background-image: url('img/bg-stars-rounds.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;    
 }
 
 .onboarding-select {
@@ -313,19 +333,18 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .city-container {
-    margin-top: 20px;
+    margin-top: 2px;
 }
 
 .data-inputs-wrapper {
     display: flex;
-    gap: 10px;    
+    gap: 10px;
 }
 
 .data-inputs-wrapper input {
     width: 30%;
     padding: 10px;
 }
-
 
 /*Убрать кнопки для инпутов type number*/
 input[type="number"]::-webkit-outer-spin-button,
@@ -337,4 +356,70 @@ input[type="number"]::-webkit-inner-spin-button {
 /* Для Firefox убираем стрелки */
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+.onboarding__birth-time-label {
+    margin-top: 20px;
+}
+
+.onboarding__country-label {
+    margin-top: 14px;
+}
+
+
+.onboarding__nickname-input {
+    margin-bottom: 16px;
+}
+
+.onboarding__email-input {
+    margin-bottom: 16px;
+}
+
+.step-screen--final {
+    background: black;
+    border-radius: 20px;
+}
+
+.onboarding__final-step-overlay {
+    background-color: black; /* Базовый цвет фона */
+    background-image: url('img/galact.png'), /* Верхнее изображение */ url('img/background.png'); /* Нижнее изображение */
+    background-repeat: no-repeat, repeat; /* Настройка повторения для обоих изображений */
+    background-position: center calc(50% - 100px), center; /* Центрирование обоих изображений */
+    background-blend-mode: normal, screen; /* Режим наложения для каждого слоя */
+    background-size: 375px auto, auto; /* Масштабирование для обоих изображений */
+}
+
+@media (max-width: 500px) {
+    .onboarding__final-step-overlay {
+        background-size: 100vw auto, auto; /* Масштабирование для обоих изображений */
+    }
+
+}.steps-subheader--step5 {    
+    margin-bottom: 32vh;
+}
+
+.onboarding--final-step-subtitle {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.onboarding__list {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.onboarding__final-step-process-indicator {
+    width: 8px;
+    height: 8px;
+    background: white;
+    opacity: .4;
+    border-radius: 50%;
+}
+
+.onboarding__final-step-process-indicator.active {    
+    opacity: 1;    
 }

@@ -72,14 +72,14 @@
             </div>
 
             <div class="step">
-              <label class="onboarding-labels" for="birth_time">
+              <label class="onboarding-labels onboarding__birth-time-label" for="birth_time">
                 Время рождения
               </label>
               <input id="birth_time" type="text" placeholder="00:00"/>
             </div>
 
             <div class="step">
-              <label class="onboarding-labels" for="country">
+              <label class="onboarding-labels onboarding__country-label" for="country">
                 Страна
               </label>
 
@@ -91,11 +91,11 @@
               </div>
 
               <div class="city-container">
-                <label class="onboarding-labels" for="city">
+                <label class="onboarding-labels onboarding__city-label" for="city">
                   Город
                 </label>
                 <div class="input-icon-container input-icon-container--city">
-                  <input placeholder="Выбрать" list="options-cities" id="city" class="text-input input-with-datalist"/>
+                  <input placeholder="Начните вводить..." list="options-cities" id="city" class="text-input input-with-datalist"/>
                   <datalist id="options-cities" class="datalist"></datalist>
                   <div class="input-icon select-icon select-icon--city"></div>
                 </div>
@@ -104,7 +104,6 @@
           </div>
         </div>
         <!-- Закончились первые три шага -->
-
 
         <div id="step3-screen" class="step-screen">
           <div id="step3" class="step">
@@ -117,15 +116,18 @@
               </div>
 
               <div class="step active">
-                <label class="onboarding-labels" for="birth_date">
+                <label class="onboarding-labels " for="nickname">
                   Как к вам обращаться?
                 </label>
-                <input id="nickname" type="text" class="text-input">
+                <input id="nickname" type="text" class="text-input onboarding__nickname-input">
 
+                <label class="onboarding-labels" for="nickname">
+                  Пол
+                </label>
                 <div class="gender-options">
                   <button class="gender-button active" data-gender="male">Мужской</button>
                   <button class="gender-button" data-gender="female">Женский</button>
-                  <button class="gender-button" data-gender="other">Не важно</button>
+                  <button class="gender-button" data-gender="other">Небинарный</button>
                 </div>
               </div>
             </div>
@@ -146,8 +148,7 @@
                 <label class="onboarding-labels" for="email">
                   Ваш E-MAIL (используется как логин)
                 </label>
-                <input id="email" type="email" class="text-input">
-
+                <input id="email" type="email" class="text-input onboarding__email-input">
 
                 <div class="checkbox-container">
                   <input type="checkbox" id="data_consent" class="checkbox-input">
@@ -174,6 +175,29 @@
                   </label>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="step5-screen" class="step-screen">
+          <div id="step5" class="step">
+            <div class="steps-block steps-block--final-screen">
+              <div class="steps-header">
+                Добро пожаловать
+              </div>
+              <div class="steps-subheader steps-subheader--step5">
+                Мы отправили пароль на ваш email
+              </div>
+              
+              <h2 class="onboarding--final-step-subtitle">Aspectum.app</h2>
+              <div class="steps-subheader ">Пока идет расчет натальной карты и персональных рекомендаций, расскажем вам о самых важных функциях</div>
+              <ul class="onboarding__list">
+                <li class="onboarding__final-step-process-indicator"></li>
+                <li class="onboarding__final-step-process-indicator active"></li>
+                <li class="onboarding__final-step-process-indicator"></li>
+                <li class="onboarding__final-step-process-indicator"></li>
+                <li class="onboarding__final-step-process-indicator"></li>
+              </ul>
             </div>
           </div>
         </div>
