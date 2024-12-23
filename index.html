@@ -75,29 +75,42 @@
               <label class="onboarding-labels onboarding__birth-time-label" for="birth_time">
                 Время рождения
               </label>
-              <input id="birth_time" type="text" placeholder="00:00"/>
+
+              <div class="input-icon-container--time">
+                <input id="birth_time" type="text" placeholder="00:00"/>
+                <svg class="onboarding__time-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8.5 16.9297C4.08594 16.9297 0.429688 13.2812 0.429688 8.85938C0.429688 4.44531 4.07812 0.789062 8.49219 0.789062C12.9141 0.789062 16.5703 4.44531 16.5703 8.85938C16.5703 13.2812 12.9141 16.9297 8.5 16.9297ZM8.5 15.3438C12.0938 15.3438 14.9844 12.4531 14.9844 8.85938C14.9844 5.26562 12.0859 2.38281 8.49219 2.38281C4.89844 2.38281 2.02344 5.26562 2.02344 8.85938C2.02344 12.4531 4.90625 15.3438 8.5 15.3438ZM4.54688 9.82812C4.19531 9.82812 3.92969 9.55469 3.92969 9.21094C3.92969 8.85938 4.19531 8.59375 4.54688 8.59375H7.875V4.08594C7.875 3.74219 8.14844 3.46875 8.49219 3.46875C8.84375 3.46875 9.11719 3.74219 9.11719 4.08594V9.21094C9.11719 9.55469 8.84375 9.82812 8.49219 9.82812H4.54688Z"
+                    fill="white" />
+                </svg>
+              </div>
+
             </div>
 
             <div class="step">
               <label class="onboarding-labels onboarding__country-label" for="country">
-                Страна
+                Страна рождения
               </label>
 
               <div class="input-icon-container ">
-                <input placeholder="Выбрать" list="options-countries" id="country"
-                       class="text-input input-with-datalist"/>
-                <datalist id="options-countries" class="datalist"></datalist>
+                <select required id="country" class="onboarding-select onboarding-select--country"> </select>
                 <div class="input-icon select-icon select-icon--country"></div>
               </div>
 
+
               <div class="city-container">
                 <label class="onboarding-labels onboarding__city-label" for="city">
-                  Город
+                  Место рождения
                 </label>
                 <div class="input-icon-container input-icon-container--city">
-                  <input placeholder="Начните вводить..." list="options-cities" id="city" class="text-input input-with-datalist"/>
-                  <datalist id="options-cities" class="datalist"></datalist>
-                  <div class="input-icon select-icon select-icon--city"></div>
+                  <div placeholder="Начните вводить..." id="city"
+                       class="text-input onboarding__city-input">Нажмите для выбора
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M0.289062 6.4375C0.289062 2.92969 3.14062 0.078125 6.64844 0.078125C10.1562 0.078125 13.0078 2.92969 13.0078 6.4375C13.0078 7.80469 12.5625 9.07031 11.8203 10.0938L15.3906 13.6719C15.6016 13.8906 15.7109 14.1797 15.7109 14.4922C15.7109 15.1406 15.2344 15.6406 14.5703 15.6406C14.2656 15.6406 13.9609 15.5391 13.7422 15.3125L10.1484 11.7188C9.14844 12.3984 7.95312 12.7969 6.64844 12.7969C3.14062 12.7969 0.289062 9.94531 0.289062 6.4375ZM1.94531 6.4375C1.94531 9.03125 4.04688 11.1406 6.64844 11.1406C9.24219 11.1406 11.3516 9.03125 11.3516 6.4375C11.3516 3.84375 9.24219 1.73438 6.64844 1.73438C4.04688 1.73438 1.94531 3.84375 1.94531 6.4375Z"
+                        fill="white" fill-opacity="0.8"/>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -188,9 +201,11 @@
               <div class="steps-subheader steps-subheader--step5">
                 Мы отправили пароль на ваш email
               </div>
-              
+
               <h2 class="onboarding--final-step-subtitle">Aspectum.app</h2>
-              <div class="steps-subheader ">Пока идет расчет натальной карты и персональных рекомендаций, расскажем вам о самых важных функциях</div>
+              <div class="steps-subheader ">Пока идет расчет натальной карты и персональных рекомендаций, расскажем вам
+                о самых важных функциях
+              </div>
               <ul class="onboarding__list">
                 <li class="onboarding__final-step-process-indicator"></li>
                 <li class="onboarding__final-step-process-indicator active"></li>
@@ -202,10 +217,43 @@
           </div>
         </div>
 
-
         <div class="buttons">
           <button id="back-button" class="button button-back">Назад</button>
           <button id="next-button" class="button primary-button">Далее</button>
+        </div>
+      </div>
+
+      <div class="onboarding__city-popup-underlay">
+        <div class="onboarding__city-popup">
+
+          <input autocomplete="off" id="city-input" type="text" class="text-input onboarding__city-input" placeholder="Начните вводить название..." >
+
+          <label class="onboarding-labels" >
+            Популярные города
+          </label>
+          
+          <ul class="onboarding__popular-cities">
+            <li></li>
+          </ul>
+
+          <p class="onboarding-labels onboarding__coord-label">
+            Или введите координаты вручную
+          </p>
+          <div class="onboarding__coord-inputs">
+            <div>
+              <label for="onboarding__lat-input" class="onboarding-labels onboarding__coord-inputs-label">Широта</label>
+              <input class="text-input" type="number" id="onboarding__lat-input" placeholder="00.0000" >
+            </div>
+
+            <div>
+              <label for="onboarding__lng-input" class="onboarding-labels onboarding__coord-inputs-label">Долгота</label>
+              <input class="text-input" type="number" id="onboarding__lng-input" placeholder="00.0000">
+            </div>
+            
+            
+          </div>
+
+          <button class="button onboarding__city-popup-btn" disabled>Готово</button>
         </div>
       </div>
 

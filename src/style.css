@@ -99,6 +99,7 @@
     color: #fff;
 }
 
+
 .button {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.24);
@@ -207,9 +208,9 @@
     max-height: 92vh;
     overflow: auto;
 
-    scrollbar-width: none; /* Для Firefox */
-    -ms-overflow-style: none; /* Для Internet Explorer */
-    overflow: hidden;
+    /*scrollbar-width: none; !* Для Firefox *!*/
+    /*-ms-overflow-style: none; !* Для Internet Explorer *!*/
+    /*overflow: hidden;*/
 }
 
 /* Скрываем кнопки "Назад" на первом шаге */
@@ -290,7 +291,7 @@
     background-image: url('img/bg-stars-rounds.png');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top;    
+    background-position: top;
 }
 
 .onboarding-select {
@@ -302,13 +303,34 @@
     border-radius: 12px;
     padding: 8px 12px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
+    border: 1px solid rgb(255 255 255/.1);
     appearance: none;
+    /*background-color: rgba(255, 255, 255, 0.1);*/
+    background-color: rgb(85, 54, 90);
+    color: rgb(255 255 255/.54);
 }
 
 .input-icon-container--month {
     width: 140px;
     flex-shrink: 0;
+}
+
+.input-icon-container--time {
+    /*width: 140px;*/
+    flex-shrink: 0;
+    width: 100%;
+    position: relative;
+}
+
+.input-icon-container--time input {
+    width: 100%;
+}
+
+.onboarding__time-icon {
+    position: absolute;
+    right: 16px;
+    top: 18px;
 }
 
 .onboarding-select--month {
@@ -325,6 +347,11 @@
 
 .input-icon-container--city {
     margin-top: 10px;
+}
+
+.onboarding-select--country {
+    width: 100%;
+    flex-shrink: 0;
 }
 
 /*Убираем иконку-дропдауна для инпутов с даталистом */
@@ -394,7 +421,9 @@ input[type="number"] {
         background-size: 100vw auto, auto; /* Масштабирование для обоих изображений */
     }
 
-}.steps-subheader--step5 {    
+}
+
+.steps-subheader--step5 {
     margin-bottom: 32vh;
 }
 
@@ -420,6 +449,104 @@ input[type="number"] {
     border-radius: 50%;
 }
 
-.onboarding__final-step-process-indicator.active {    
-    opacity: 1;    
+.onboarding__final-step-process-indicator.active {
+    opacity: 1;
 }
+
+/*Стили для попапа выбора города*/
+
+.onboarding__city-popup-underlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0 0 0/.8);
+    display: none;
+}
+
+.onboarding__city-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 375px;
+    min-height: 328px;
+    border-radius: 20px;
+    background: #421F47;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+@media (max-width: 500px) {
+    .onboarding__city-popup {
+        width: 90vw;
+    }
+
+}
+
+.onboarding__city-input {
+    height: 56px;
+    /*color: rgb(255 255 255/0.54);*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*position: relative;*/
+}
+
+
+.onboarding__city-input {
+    margin-bottom: 24px;
+}
+
+.onboarding__popular-cities {
+    background: rgba(255, 255, 255, 0.10);
+    padding: 12px;
+    margin-top: 16px;
+    margin-bottom: 26px;
+    border-radius: 20px;
+    list-style: none;
+
+}
+
+.onboarding__city-item {
+    color: rgba(255, 255, 255, 0.54);
+    cursor: pointer;
+    padding-block: 10px;
+}
+
+.onboarding__city-item:hover {
+    color: white;       
+}
+
+.onboarding__coord-label {
+    margin-bottom: 16px;
+}
+
+.onboarding__coord-inputs-label {
+    margin-bottom: 4px;
+    display: block;
+    font-size: 10px;
+    color: rgb(255 255 255 /.4)
+}
+
+.onboarding__coord-inputs {
+    display: flex;
+    gap: 19px;
+    margin-bottom: 26px;
+}
+
+.onboarding__city-popup-btn {
+    border: 1px solid rgba(255, 185, 76, 0.16);
+    background: rgba(255, 185, 76, 0.16);
+    backdrop-filter: blur(3px);
+    color: #FFB94C;
+}
+
+.onboarding__city-popup-btn:disabled {
+    background: rgba(255, 185, 76, 0.16);    
+    color: #564F45;
+}
+
