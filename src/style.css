@@ -488,7 +488,7 @@ input[type="number"] {
 }
 
 .onboarding__city-input {
-    height: 56px;    
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -506,13 +506,37 @@ input[type="number"] {
 }
 
 .onboarding__popular-cities {
+    height: 210px;
+    overflow: auto;    
+    list-style: none;
+}
+
+.onboarding__popular-cities-wrapper-for-scroll {
+    height: 230px;
     background: rgba(255, 255, 255, 0.10);
     padding: 12px;
     margin-top: 16px;
     margin-bottom: 26px;
     border-radius: 20px;
-    list-style: none;
 }
+
+.onboarding__popular-cities::-webkit-scrollbar {
+    width: 6px; /* Ширина скроллбара */
+}
+
+/* Стиль для "ползунка" скроллбара */
+.onboarding__popular-cities::-webkit-scrollbar-thumb {
+    background-color: rgb(255 255 255 /.2); 
+    border-radius: 8px; /* Скругленные углы */
+
+}
+
+/* Стиль для области скроллбара */
+.onboarding__popular-cities::-webkit-scrollbar-track {
+    background-color: transparent; /* Цвет фона области скроллбара */
+    border-radius: 10px; /* Скругленные углы */
+}
+
 
 .onboarding__city-item {
     color: rgba(255, 255, 255, 0.54);
@@ -521,7 +545,7 @@ input[type="number"] {
 }
 
 .onboarding__city-item:hover {
-    color: white;       
+    color: white;
 }
 
 .onboarding__coord-label {
@@ -542,14 +566,16 @@ input[type="number"] {
 }
 
 .onboarding__city-popup-btn {
-    border: 1px solid rgba(255, 185, 76, 0.16);    
+    border: 1px solid rgba(255, 185, 76, 0.16);
     backdrop-filter: blur(3px);
     color: #421F47;
 }
 
 .onboarding__city-popup-btn:disabled {
-    background: rgba(255, 185, 76, 0.16);  
-    
+    background: rgba(255, 185, 76, 0.16);
+
     color: #564F45;
 }
+
+
 

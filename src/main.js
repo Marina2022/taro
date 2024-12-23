@@ -24,9 +24,9 @@ const onboardingCityInputDiv = document.querySelector('.onboarding__city-input--
 const onboardingCityInPopupInput = document.getElementById('onboarding__city-in-popup-input')
 const onboardingPopularCitiesWrapper = document.querySelector('.onboarding__popular-cities-wrapper')
 const onboardingCoordLabel = document.querySelector('.onboarding__coord-label')
+const onboardingPopularCitiesLabel = document.querySelector('.onboarding__popular-cities-label')
+const onboardingPopularCitiesList = document.querySelector('.onboarding__popular-cities');
 
-
-console.log('onboardingCityInPopupInput', onboardingCityInPopupInput)
 
 const header = document.querySelector('.header')
 const tabbar = document.querySelector('.tabbar')
@@ -34,7 +34,8 @@ const tabbar = document.querySelector('.tabbar')
 const onboardingLatInput = document.getElementById('onboarding__lat-input')
 const onboardingLngInput = document.getElementById('onboarding__lng-input')
 
-// let cities = []
+
+let onboardingCities = []
 let onboardingCountries = []
 let onboardingCurrentCountry = null
 let onboardingCoords = null
@@ -47,13 +48,15 @@ document.body.style.overflow = 'hidden'
 
 function initRegistration() {
 
+  onboardingCurrentCountry = {
+    name: 'Российская Федерация',
+    id: 8
+  }
   let birth_date = ''
 
   fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
     populateSelect('country', val)
-    onboardingCountries = val
-    console.log(onboardingCountries)
-    console.log(cities)
+    onboardingCountries = val    
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -63,7 +66,7 @@ function initRegistration() {
   // По умолчанию РФ стоит в выбранной стране, потому для нее фетчим города:
   fetch('https://my.aspectum.app/api/cities/?country_id=8').then(res => res.json().then(val => {
     populatePopularCities(val.slice(0, 5))
-    cities = val
+    onboardingCities = val
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -355,17 +358,18 @@ const populateSelect = (id, fetchedData) => {
 
 // Наполняем блок "Популярные города" городами, города фетчим внутри функции initRegistration
 const populatePopularCities = (citiesList) => {
-  const popularCities = document.querySelector('.onboarding__popular-cities');
-  popularCities.innerHTML = '';
+  onboardingPopularCitiesList.innerHTML = '';
   citiesList.forEach(city => {
     const listItem = document.createElement('li');
     listItem.textContent = city.name;
     listItem.dataset.cityId = city.id;
-    listItem.dataset.lat = city.latitude;
-    listItem.dataset.lng = city.longitude;
+    listItem.dataset.lat = city.latitude || "";  // пока так, потом todo
+    listItem.dataset.lng = city.longitude || ""; // пока так, потом todo
     listItem.className = 'onboarding__city-item';
-    popularCities.appendChild(listItem);
+    onboardingPopularCitiesList.appendChild(listItem);
   });
+
+  setEventListenerOnCityItems()
 }
 
 
@@ -379,11 +383,16 @@ countryInput.addEventListener('change', (e) => {
     id: value,
     name: text
   }
+  
+  onboardingCurrentCityId = null
+
+  
+  onboardingCityInputDiv.textContent = ''
 
   // фетчим города для выбранной страны:
   fetch('https://my.aspectum.app/api/cities/?country_id=' + value).then(res => res.json().then(val => {
     populatePopularCities(val.slice(0, 5))
-    cities = val
+    onboardingCities = val    
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -398,6 +407,10 @@ const closeCityPopup = () => {
   onboardingLngInput.value = ""
   document.removeEventListener('keydown', handleKeyDown);
   cityPopupUnderlay.style.display = 'none';
+  populatePopularCities(onboardingCities.slice(0, 5))
+  onboardingPopularCitiesLabel.textContent = 'Популярные города'  
+  onboardingCityInPopupInput.value = ""
+  onboardingPopularCitiesWrapper.style.display = 'block'
 }
 
 // Закрытие попапа по Esc
@@ -408,15 +421,10 @@ const handleKeyDown = (e) => {
   }
 }
 
-// открытие попапа по клику на инпут Место рождения:
-cityInput.addEventListener('click', (e) => {
-
+const setEventListenerOnCityItems = ()=>{
   document.querySelectorAll('.onboarding__city-item')
     .forEach(itemEl => {
       itemEl.addEventListener('click', () => {
-
-        // // устанавливаем текущий город
-        // onboardingCurrentCityId = itemEl.dataset.cityId 
 
         // вставляем координаты в инпуты        
         onboardingLatInput.value = itemEl.dataset.lat
@@ -433,12 +441,39 @@ cityInput.addEventListener('click', (e) => {
         onboardingCityPopupBtn.disabled = false
       })
     })
+}
 
-  onboardingCityInPopupInput.addEventListener('focus', () => {
+
+// открытие попапа по клику на инпут Место рождения:
+cityInput.addEventListener('click', (e) => {
+
+  setEventListenerOnCityItems()
+
+
+  //
+  onboardingCityInPopupInput.addEventListener('focus', (e) => {
     onboardingPopularCitiesWrapper.style.display = 'block'
+    onboardingPopularCitiesLabel.textContent = 'Начните вводить название города...'
     onboardingCoordLabel.style.display = 'block'
     onboardingCityPopupBtn.disabled = false
+    onboardingPopularCitiesList.innerHTML = ''
   })
+
+
+  onboardingCityInPopupInput.addEventListener('input', (e) => {
+    
+    const url = 'https://my.aspectum.app/api/cities/?country_id=' + onboardingCurrentCountry.id +'&prefix=' + e.target.value
+    
+    fetch(url).then(res => res.json().then(val => {
+      populatePopularCities(val)
+      cities = val
+    }))
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+
+  })
+  
 
 
   // Закрытие попапа по клику за пределами попапа
@@ -447,7 +482,7 @@ cityInput.addEventListener('click', (e) => {
       closeCityPopup()
     }
   })
-  
+
 
 // Добавляем обработчик события keydown на весь документ
   document.addEventListener('keydown', handleKeyDown);
@@ -455,10 +490,6 @@ cityInput.addEventListener('click', (e) => {
 // открываем сам попап
   cityPopupUnderlay.style = 'display: block'
 })
-
-
-
-
 
 
 // Маска для инпута времени рождения:
@@ -477,7 +508,7 @@ function addLeadingZero(num) {
 onboardingLatInput.addEventListener('input', (e) => {
   // type = number не подойдет, т.к. браузер точку принудительно меняет на запятую, поэтому валидируем вручную
   onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.]/g, "");
-  
+
   if (onboardingLatInput.value && onboardingLngInput.value) {
     onboardingCityPopupBtn.disabled = false
   }
