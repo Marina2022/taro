@@ -22,6 +22,8 @@ const cityPopup = document.querySelector('.onboarding__city-popup')
 const onboardingCityPopupBtn = document.querySelector('.onboarding__city-popup-btn')
 const onboardingCityInputDiv = document.querySelector('.onboarding__city-input--div')
 const onboardingCityInPopupInput = document.getElementById('onboarding__city-in-popup-input')
+const onboardingPopularCitiesWrapper = document.querySelector('.onboarding__popular-cities-wrapper')
+const onboardingCoordLabel = document.querySelector('.onboarding__coord-label')
 
 
 console.log('onboardingCityInPopupInput', onboardingCityInPopupInput)
@@ -36,6 +38,7 @@ const onboardingLngInput = document.getElementById('onboarding__lng-input')
 let onboardingCountries = []
 let onboardingCurrentCountry = null
 let onboardingCoords = null
+let onboardingCurrentCityId = null
 
 
 header.style.display = 'none'
@@ -45,11 +48,12 @@ document.body.style.overflow = 'hidden'
 function initRegistration() {
 
   let birth_date = ''
-  
+
   fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
     populateSelect('country', val)
     onboardingCountries = val
     console.log(onboardingCountries)
+    console.log(cities)
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -64,7 +68,6 @@ function initRegistration() {
     .catch(error => {
       console.error('Ошибка:', error);
     });
-
 
 // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
@@ -358,6 +361,8 @@ const populatePopularCities = (citiesList) => {
     const listItem = document.createElement('li');
     listItem.textContent = city.name;
     listItem.dataset.cityId = city.id;
+    listItem.dataset.lat = city.latitude;
+    listItem.dataset.lng = city.longitude;
     listItem.className = 'onboarding__city-item';
     popularCities.appendChild(listItem);
   });
@@ -388,9 +393,9 @@ countryInput.addEventListener('change', (e) => {
 
 // очистка формы при скрытии попапа
 
-const closeCityPopup = ()=>{
+const closeCityPopup = () => {
   onboardingLatInput.value = ""
-  onboardingLngInput.value = ""  
+  onboardingLngInput.value = ""
   document.removeEventListener('keydown', handleKeyDown);
   cityPopupUnderlay.style.display = 'none';
 }
@@ -405,22 +410,56 @@ const handleKeyDown = (e) => {
 
 // открытие попапа по клику на инпут Место рождения:
 cityInput.addEventListener('click', (e) => {
-  
-  cityPopupUnderlay.style = 'display: block'
+
+  document.querySelectorAll('.onboarding__city-item')
+    .forEach(itemEl => {
+      itemEl.addEventListener('click', () => {
+
+        // // устанавливаем текущий город
+        // onboardingCurrentCityId = itemEl.dataset.cityId 
+
+        // вставляем координаты в инпуты        
+        onboardingLatInput.value = itemEl.dataset.lat
+        onboardingLngInput.value = itemEl.dataset.lng
+
+        // скрываем ненужную теперь часть попапа (с популярными городами и проч)
+        onboardingPopularCitiesWrapper.style.display = 'none'
+        onboardingCoordLabel.style.display = 'none'
+
+        // вставляем название города в инпут    
+        onboardingCityInPopupInput.value = itemEl.textContent
+
+        // кнопка Готово становится активной
+        onboardingCityPopupBtn.disabled = false
+      })
+    })
+
+  onboardingCityInPopupInput.addEventListener('focus', () => {
+    onboardingPopularCitiesWrapper.style.display = 'block'
+    onboardingCoordLabel.style.display = 'block'
+    onboardingCityPopupBtn.disabled = false
+  })
+
 
   // Закрытие попапа по клику за пределами попапа
   cityPopupUnderlay.addEventListener('click', (e) => {
     if (!cityPopup.contains(e.target)) {
-      
-      // cityPopupUnderlay.style.display = 'none';
       closeCityPopup()
     }
   })
-
+  
 
 // Добавляем обработчик события keydown на весь документ
   document.addEventListener('keydown', handleKeyDown);
+
+// открываем сам попап
+  cityPopupUnderlay.style = 'display: block'
 })
+
+
+
+
+
 
 // Маска для инпута времени рождения:
 const timeInput = document.getElementById('birth_time');
@@ -435,13 +474,19 @@ function addLeadingZero(num) {
   return num < 10 ? `0${num}` : `${num}`;
 }
 
-onboardingLatInput.addEventListener('input', (e)=>{  
+onboardingLatInput.addEventListener('input', (e) => {
+  // type = number не подойдет, т.к. браузер точку принудительно меняет на запятую, поэтому валидируем вручную
+  onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.]/g, "");
+  
   if (onboardingLatInput.value && onboardingLngInput.value) {
     onboardingCityPopupBtn.disabled = false
-  }  
+  }
 })
 
-onboardingLngInput.addEventListener('input', (e)=>{  
+onboardingLngInput.addEventListener('input', (e) => {
+  // type = number не подойдет, т.к. браузер точку принудительно меняет на запятую, поэтому валидируем вручную
+  onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.]/g, "");
+
   if (onboardingLatInput.value && onboardingLngInput.value) {
     onboardingCityPopupBtn.disabled = false
   } else {
@@ -449,7 +494,7 @@ onboardingLngInput.addEventListener('input', (e)=>{
   }
 })
 
-onboardingCityPopupBtn.addEventListener('click', (e)=>{
+onboardingCityPopupBtn.addEventListener('click', (e) => {
 
   const latitude = parseFloat(onboardingLatInput.value);
   const longitude = parseFloat(onboardingLngInput.value);
@@ -470,25 +515,21 @@ onboardingCityPopupBtn.addEventListener('click', (e)=>{
   }
 
   if (isValid) {
-    console.log('Установка координат и Переход к след. шагу')
-    
-    
-    
+
     // если город выбран
     if (onboardingCityInPopupInput.value) {
       // устанавливаем город и закрываем попап
+      onboardingCityInputDiv.textContent = onboardingCityInPopupInput.value
     } else {
       onboardingCoords = {lat: latitude, lng: longitude}
-      onboardingCityInputDiv.textContent = `${latitude}, ${longitude}`      
+      onboardingCityInputDiv.textContent = `${latitude}, ${longitude}`
     }
     closeCityPopup()
-    
-    
-     
+
   } else {
     alert(message)
   }
-  
+
 })
 
 initRegistration()
