@@ -14,18 +14,17 @@ const step3 = document.getElementById("step3");
 const step4 = document.getElementById("step4");
 const step5 = document.getElementById("step5");
 
-
 const onboardingOverlay = document.querySelector(".onboarding-overlay");
 const countryInput = document.getElementById("country")
 const cityInput = document.getElementById("city")
 const cityPopupUnderlay = document.querySelector('.onboarding__city-popup-underlay')
 const cityPopup = document.querySelector('.onboarding__city-popup')
 const onboardingCityPopupBtn = document.querySelector('.onboarding__city-popup-btn')
+const onboardingCityInputDiv = document.querySelector('.onboarding__city-input--div')
+const onboardingCityInPopupInput = document.getElementById('onboarding__city-in-popup-input')
 
-let countries = []
-let cities = []
-let birth_date = ''
-let currentCountry = null
+
+console.log('onboardingCityInPopupInput', onboardingCityInPopupInput)
 
 const header = document.querySelector('.header')
 const tabbar = document.querySelector('.tabbar')
@@ -33,7 +32,10 @@ const tabbar = document.querySelector('.tabbar')
 const onboardingLatInput = document.getElementById('onboarding__lat-input')
 const onboardingLngInput = document.getElementById('onboarding__lng-input')
 
-
+// let cities = []
+let onboardingCountries = []
+let onboardingCurrentCountry = null
+let onboardingCoords = null
 
 
 header.style.display = 'none'
@@ -41,11 +43,13 @@ tabbar.style.display = 'none'
 document.body.style.overflow = 'hidden'
 
 function initRegistration() {
- 
+
+  let birth_date = ''
+  
   fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
     populateSelect('country', val)
-    countries = val
-    console.log(countries)
+    onboardingCountries = val
+    console.log(onboardingCountries)
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -235,23 +239,23 @@ function initRegistration() {
       const country = document.getElementById("country").value;
       const city = document.getElementById("city").value;
 
-      if (!country) {
-        alert("Пожалуйста, выберите страну.");
-        return false;
-      } else if (!countries.find(item => item.name === country)) {
-
-        alert("Пожалуйста, выберите страну из списка");
-        return false;
-      }
-
-      if (!city) {
-        alert("Пожалуйста, введите город.");
-        return false;
-      } else if (!cities.find(item => item.name === city)) {
-
-        alert("Пожалуйста, выберите город из списка. Если вашего города нет, выберите ближайший.");
-        return false;
-      }
+      // if (!country) {
+      //   alert("Пожалуйста, выберите страну.");
+      //   return false;
+      // } else if (!countries.find(item => item.name === country)) {
+      //
+      //   alert("Пожалуйста, выберите страну из списка");
+      //   return false;
+      // }
+      //
+      // if (!city) {
+      //   alert("Пожалуйста, введите город.");
+      //   return false;
+      // } else if (!cities.find(item => item.name === city)) {
+      //
+      //   alert("Пожалуйста, выберите город из списка. Если вашего города нет, выберите ближайший.");
+      //   return false;
+      // }
     } else if (step === 3) {
       const nickname = document.getElementById("nickname").value;
       if (!nickname) {
@@ -366,7 +370,7 @@ countryInput.addEventListener('change', (e) => {
   const value = selectedOption.value; // Получаем значение
   const text = selectedOption.textContent; // Получаем текстовое содержимое
 
-  currentCountry = {
+  onboardingCurrentCountry = {
     id: value,
     name: text
   }
@@ -382,26 +386,38 @@ countryInput.addEventListener('change', (e) => {
 })
 
 
-// открытие попапа по клику на инпут Место рождения:
+// очистка формы при скрытии попапа
 
+const closeCityPopup = ()=>{
+  onboardingLatInput.value = ""
+  onboardingLngInput.value = ""  
+  document.removeEventListener('keydown', handleKeyDown);
+  cityPopupUnderlay.style.display = 'none';
+}
+
+// Закрытие попапа по Esc
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape') { // Проверяем, что нажата клавиша Esc
+    // cityPopupUnderlay.style.display = 'none';
+    closeCityPopup()
+  }
+}
+
+// открытие попапа по клику на инпут Место рождения:
 cityInput.addEventListener('click', (e) => {
   
-
   cityPopupUnderlay.style = 'display: block'
 
   // Закрытие попапа по клику за пределами попапа
   cityPopupUnderlay.addEventListener('click', (e) => {
     if (!cityPopup.contains(e.target)) {
-      cityPopupUnderlay.style.display = 'none';
+      
+      // cityPopupUnderlay.style.display = 'none';
+      closeCityPopup()
     }
   })
 
-  // Закрытие попапа по Esc
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') { // Проверяем, что нажата клавиша Esc
-      cityPopupUnderlay.style.display = 'none'; // Скрываем элемент
-    }
-  }
+
 // Добавляем обработчик события keydown на весь документ
   document.addEventListener('keydown', handleKeyDown);
 })
@@ -455,7 +471,20 @@ onboardingCityPopupBtn.addEventListener('click', (e)=>{
 
   if (isValid) {
     console.log('Установка координат и Переход к след. шагу')
-    // Установка координат и Переход к след. шагу
+    
+    
+    
+    // если город выбран
+    if (onboardingCityInPopupInput.value) {
+      // устанавливаем город и закрываем попап
+    } else {
+      onboardingCoords = {lat: latitude, lng: longitude}
+      onboardingCityInputDiv.textContent = `${latitude}, ${longitude}`      
+    }
+    closeCityPopup()
+    
+    
+     
   } else {
     alert(message)
   }
