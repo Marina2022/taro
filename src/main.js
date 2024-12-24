@@ -56,7 +56,7 @@ function initRegistration() {
 
   fetch('https://my.aspectum.app/api/countries').then(res => res.json().then(val => {
     populateSelect('country', val)
-    onboardingCountries = val    
+    onboardingCountries = val
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -75,7 +75,7 @@ function initRegistration() {
 // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
 
-  let currentStep = 2; // Индекс текущего шага
+  let currentStep = 5; // Индекс текущего шага
   let selectedGender = "male"; // Выбранный пол
 
 // Функция обновления видимости шагов
@@ -253,15 +253,11 @@ function initRegistration() {
       //   alert("Пожалуйста, выберите страну из списка");
       //   return false;
       // }
-      //
-      // if (!city) {
-      //   alert("Пожалуйста, введите город.");
-      //   return false;
-      // } else if (!cities.find(item => item.name === city)) {
-      //
-      //   alert("Пожалуйста, выберите город из списка. Если вашего города нет, выберите ближайший.");
-      //   return false;
-      // }
+      
+      if (!onboardingCurrentCityId) {
+        alert("Пожалуйста, укажите место рождения.");
+        return false;
+      } 
     } else if (step === 3) {
       const nickname = document.getElementById("nickname").value;
       if (!nickname) {
@@ -301,12 +297,14 @@ function initRegistration() {
 // Функция отправки данных регистрации на сервер
   function submitRegistration() {
 
-    const city = cities.find(item => item.name === document.getElementById("city").value)
+    // const city = cities.find(item => item.name === document.getElementById("city").value)
 
     const data = {
       birth_date,
       birth_time: document.getElementById("birth_time").value,
-      city_id: city.id,
+      city_id: onboardingCurrentCityId ?? '',
+      latitude: onboardingCoords?.lat ?? '',
+      longitude: onboardingCoords?.lng ?? '',
       nickname: document.getElementById("nickname").value,
       gender: selectedGender,
       email: document.getElementById("email").value,
@@ -383,16 +381,15 @@ countryInput.addEventListener('change', (e) => {
     id: value,
     name: text
   }
-  
+
   onboardingCurrentCityId = null
 
-  
   onboardingCityInputDiv.textContent = ''
 
   // фетчим города для выбранной страны:
   fetch('https://my.aspectum.app/api/cities/?country_id=' + value).then(res => res.json().then(val => {
     populatePopularCities(val.slice(0, 5))
-    onboardingCities = val    
+    onboardingCities = val
   }))
     .catch(error => {
       console.error('Ошибка:', error);
@@ -408,7 +405,7 @@ const closeCityPopup = () => {
   document.removeEventListener('keydown', handleKeyDown);
   cityPopupUnderlay.style.display = 'none';
   populatePopularCities(onboardingCities.slice(0, 5))
-  onboardingPopularCitiesLabel.textContent = 'Популярные города'  
+  onboardingPopularCitiesLabel.textContent = 'Популярные города'
   onboardingCityInPopupInput.value = ""
   onboardingPopularCitiesWrapper.style.display = 'block'
 }
@@ -421,7 +418,7 @@ const handleKeyDown = (e) => {
   }
 }
 
-const setEventListenerOnCityItems = ()=>{
+const setEventListenerOnCityItems = () => {
   document.querySelectorAll('.onboarding__city-item')
     .forEach(itemEl => {
       itemEl.addEventListener('click', () => {
@@ -439,6 +436,7 @@ const setEventListenerOnCityItems = ()=>{
 
         // кнопка Готово становится активной
         onboardingCityPopupBtn.disabled = false
+        onboardingCurrentCityId = itemEl.dataset.cityId
       })
     })
 }
@@ -457,13 +455,16 @@ cityInput.addEventListener('click', (e) => {
     onboardingCoordLabel.style.display = 'block'
     onboardingCityPopupBtn.disabled = false
     onboardingPopularCitiesList.innerHTML = ''
+
+    onboardingCurrentCityId = null
+    onboardingCoords = null
   })
 
 
   onboardingCityInPopupInput.addEventListener('input', (e) => {
-    
-    const url = 'https://my.aspectum.app/api/cities/?country_id=' + onboardingCurrentCountry.id +'&prefix=' + e.target.value
-    
+
+    const url = 'https://my.aspectum.app/api/cities/?country_id=' + onboardingCurrentCountry.id + '&prefix=' + e.target.value
+
     fetch(url).then(res => res.json().then(val => {
       populatePopularCities(val)
       cities = val
@@ -473,7 +474,6 @@ cityInput.addEventListener('click', (e) => {
       });
 
   })
-  
 
 
   // Закрытие попапа по клику за пределами попапа
@@ -507,7 +507,7 @@ function addLeadingZero(num) {
 
 onboardingLatInput.addEventListener('input', (e) => {
   // type = number не подойдет, т.к. браузер точку принудительно меняет на запятую, поэтому валидируем вручную
-  onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.]/g, "");
+  onboardingLatInput.value = onboardingLatInput.value.replace(/[^0-9.-]/g, "");
 
   if (onboardingLatInput.value && onboardingLngInput.value) {
     onboardingCityPopupBtn.disabled = false
@@ -516,7 +516,7 @@ onboardingLatInput.addEventListener('input', (e) => {
 
 onboardingLngInput.addEventListener('input', (e) => {
   // type = number не подойдет, т.к. браузер точку принудительно меняет на запятую, поэтому валидируем вручную
-  onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.]/g, "");
+  onboardingLngInput.value = onboardingLngInput.value.replace(/[^0-9.-]/g, "");
 
   if (onboardingLatInput.value && onboardingLngInput.value) {
     onboardingCityPopupBtn.disabled = false
@@ -550,6 +550,8 @@ onboardingCityPopupBtn.addEventListener('click', (e) => {
     // если город выбран
     if (onboardingCityInPopupInput.value) {
       // устанавливаем город и закрываем попап
+
+      onboardingCoords = {lat: latitude, lng: longitude}
       onboardingCityInputDiv.textContent = onboardingCityInPopupInput.value
     } else {
       onboardingCoords = {lat: latitude, lng: longitude}
