@@ -7,6 +7,12 @@
     border: 1px solid rgb(255 255 255/.3);
     border-radius: 20px;
     padding: 20px;
+    height: 410px;
+    padding-block: 24px;
+}
+
+.steps-block--final-screen {
+    height: unset!important; 
 }
 
 .steps-header {
@@ -28,6 +34,7 @@
     font-weight: 500;
     line-height: 22px; /* 137.5% */
     margin-bottom: 24px;
+
 }
 
 .step {
@@ -64,6 +71,7 @@
 }
 
 .step.completed {
+
     opacity: 0.5; /* Можно использовать для визуального отличия завершенных шагов */
 }
 
@@ -85,6 +93,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: 16px; /* 133.333% */
+    margin-top: 14px;
 }
 
 .step input, select {
@@ -388,16 +397,21 @@ input[type="number"] {
 }
 
 .onboarding__birth-time-label {
+    margin-top: 30px;
+}
+
+.onboarding__birth-place-label {
     margin-top: 20px;
+    display: block;
 }
 
 .onboarding__country-label {
-    margin-top: 14px;
+    /*margin-top: 14px;*/
 }
 
 
 .onboarding__nickname-input {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .onboarding__email-input {
@@ -501,14 +515,33 @@ input[type="number"] {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    
-    
+    color: rgb(255 255 255/0.54);
 }
 
 /* это инпут "Нажмите для выбора" на шаге Выбора места рожения, он сделан дивом, чтобы подсказки не всплывали */
 
-.onboarding__city-input--div {
+.onboarding__city-input-outer {
     color: rgb(255 255 255/0.54);
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    }
+
+.onboarding__city-input--div {
+    width: 28ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /*color: rgb(255 255 255/0.54);*/
+    
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*padding-right: 20px;*/
+    
 }
 
 .onboarding__city-input {
@@ -551,10 +584,10 @@ input[type="number"] {
     color: rgba(255, 255, 255, 0.54);
     cursor: pointer;
     padding-block: 10px;
-    
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .onboarding__city-item:hover {
@@ -1129,4 +1162,17 @@ input[type="number"] {
     z-index: 100;
     cursor: pointer;
     padding-block: 10px;
+}
+
+.text-input--birth-time {
+    color: rgb(255 255 255 / 0.64)!important;    
+    
+    }
+
+.text-input--birth-time::placeholder {
+    color: rgb(255 255 255 / 0.64)!important;
+}
+
+.text-input--coords {
+    color: rgb(255 255 255 / 0.64);
 }

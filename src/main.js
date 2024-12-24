@@ -10,13 +10,15 @@ const step4Screen = document.getElementById("step4-screen");
 const step5Screen = document.getElementById("step5-screen");
 const currentStepIndicator = document.getElementById("current-step");
 
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
 const step3 = document.getElementById("step3");
 const step4 = document.getElementById("step4");
 const step5 = document.getElementById("step5");
 
 const onboardingOverlay = document.querySelector(".onboarding-overlay");
 const countryInput = document.getElementById("country")
-const cityInput = document.getElementById("city")
+const cityInput = document.getElementById("onboardingCity")
 const cityPopupUnderlay = document.querySelector('.onboarding__city-popup-underlay')
 const cityPopup = document.querySelector('.onboarding__city-popup')
 const onboardingCityPopupBtn = document.querySelector('.onboarding__city-popup-btn')
@@ -85,7 +87,7 @@ function initRegistration() {
 // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
 
-  let currentStep = 2; // Индекс текущего шага
+  let currentStep = 1; // Индекс текущего шага
   let selectedGender = "male"; // Выбранный пол
 
 // Функция обновления видимости шагов
@@ -97,6 +99,8 @@ function initRegistration() {
     });
 
     if (currentStep < 3) {
+      
+       
       stepsContainer.style.display = "block";
       stepHeader.style.display = "block";
       step3Screen.style.display = "none";
@@ -106,8 +110,10 @@ function initRegistration() {
         const inputs = step.querySelectorAll("input, select");
 
         if (index < currentStep) {
-          step.classList.add("completed");
-          inputs.forEach(input => input.setAttribute("disabled", "true"));
+          // step.classList.add("completed");
+          step.classList.add("active");
+          
+          // inputs.forEach(input => input.setAttribute("disabled", "true"));
         } else if (index === currentStep) {
           step.classList.add("active");
           inputs.forEach(input => input.removeAttribute("disabled"));
@@ -116,11 +122,22 @@ function initRegistration() {
         }
       });
 
+      if (currentStep === 2) {
+        step1.classList.remove('active')
+        step2.classList.remove('active')
+      }
+      
+      
+
       // Обновить шаг в заголовке
-      currentStepIndicator.innerText = currentStep + 1;
+      
+      
+      // currentStepIndicator.innerText = currentStep + 1;
+      currentStepIndicator.innerText = currentStep;
 
       // Обновить кнопки "Назад" и "Далее"
-      backButton.style.display = currentStep === 0 ? "none" : "inline-block";
+      // backButton.style.display = currentStep === 0 ? "none" : "inline-block";
+      backButton.style.display = currentStep === 1 ? "none" : "inline-block";
       nextButton.innerText = "Далее";
 
     } else if (currentStep === 3) {
@@ -132,6 +149,8 @@ function initRegistration() {
 
       // Активируем шаг 3
       step3.classList.add("active");
+      step1.classList.remove("active");
+      step2.classList.remove("active");
 
       // Обновить кнопки
       backButton.style.display = "inline-block";
@@ -203,7 +222,7 @@ function initRegistration() {
 
 // Функция валидации текущего шага
   function validateStep(step) {
-    if (step === 0) {
+    if (step === 1) {
 
       // кол-во дней в месяцах
       const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -253,7 +272,8 @@ function initRegistration() {
 
     } else if (step === 2) {
       const country = document.getElementById("country").value;
-      const city = document.getElementById("city").value;
+      
+      // const city = document.getElementById("onboardingCity").textContent;
 
       // if (!country) {
       //   alert("Пожалуйста, выберите страну.");
@@ -306,9 +326,7 @@ function initRegistration() {
 
 // Функция отправки данных регистрации на сервер
   function submitRegistration() {
-
-    // const city = cities.find(item => item.name === document.getElementById("city").value)
-
+    
     const data = {
       birth_date,
       birth_time: document.getElementById("birth_time").value,
@@ -337,17 +355,19 @@ function initRegistration() {
           // location.hash = '/';
           currentStep = 5
           updateSteps()
-          
           launchPercentCounter()
           
-          
+                              
         } else {
-          // Обработка ошибок         
-          alert(result.error);
+          // Обработка ошибок    
+          
+          throw new Error(result.error)
+          // alert(result.error);
         }
       })
       .catch(error => {
         console.error('Ошибка:', error);
+        alert(error);
       });
   }
 

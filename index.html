@@ -38,12 +38,12 @@
             <div id="step-header" class="steps-header">
               Шаг
               <span id="current-step"></span>
-              из 3
+              из 2
             </div>
             <div class="steps-subheader">
               Данные для расчёта натальной карты и персонального гороскопа
             </div>
-            <div class="step active">
+            <div class="step active" id="step1">
               <label class="onboarding-labels" for="birth-month">
                 Дата рождения
               </label>
@@ -67,18 +67,20 @@
                   </select>
                   <div class="input-icon select-icon"></div>
                 </div>
-                <input id="birth-day" type="number" class="text-input" placeholder="День" min="1" max="31">
-                <input id="birth-year" type="number" class="text-input" placeholder="Год" maxlength="4">
+                <input id="birth-day" type="number" class="text-input text-input--birth-time" placeholder="День" min="1"
+                       max="31">
+                <input id="birth-year" type="number" class="text-input text-input--birth-time" placeholder="Год"
+                       maxlength="4">
               </div>
             </div>
 
-            <div class="step">
+            <div class="step" id="step2">
               <label class="onboarding-labels onboarding__birth-time-label" for="birth_time">
                 Время рождения
               </label>
 
               <div class="input-icon-container--time">
-                <input id="birth_time" type="text" placeholder="00:00"/>
+                <input id="birth_time" type="text" placeholder="00:00" class="text-input--birth-time"/>
                 <svg class="onboarding__time-icon" width="17" height="17" viewBox="0 0 17 17" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -101,12 +103,14 @@
 
 
               <div class="city-container">
-                <label class="onboarding-labels onboarding__city-label" for="city">
+                <label class="onboarding-labels onboarding__birth-place-label" >
                   Место рождения
                 </label>
                 <div class="input-icon-container input-icon-container--city">
-                  <div placeholder="Начните вводить..." id="city"
-                       class="text-input onboarding__city-input onboarding__city-input--div">Нажмите для выбора
+                  <div class="onboarding__city-input-outer text-input onboarding__city-input" id="onboardingCity">
+                    <div placeholder="Начните вводить..." 
+                         class=" onboarding__city-input--div">Нажмите для выбора                      
+                    </div>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M0.289062 6.4375C0.289062 2.92969 3.14062 0.078125 6.64844 0.078125C10.1562 0.078125 13.0078 2.92969 13.0078 6.4375C13.0078 7.80469 12.5625 9.07031 11.8203 10.0938L15.3906 13.6719C15.6016 13.8906 15.7109 14.1797 15.7109 14.4922C15.7109 15.1406 15.2344 15.6406 14.5703 15.6406C14.2656 15.6406 13.9609 15.5391 13.7422 15.3125L10.1484 11.7188C9.14844 12.3984 7.95312 12.7969 6.64844 12.7969C3.14062 12.7969 0.289062 9.94531 0.289062 6.4375ZM1.94531 6.4375C1.94531 9.03125 4.04688 11.1406 6.64844 11.1406C9.24219 11.1406 11.3516 9.03125 11.3516 6.4375C11.3516 3.84375 9.24219 1.73438 6.64844 1.73438C4.04688 1.73438 1.94531 3.84375 1.94531 6.4375Z"
@@ -196,8 +200,8 @@
 
         <div id="step5-screen" class="step-screen">
           <div id="step5" class="step">
-                        
-            
+
+
             <div class="steps-block steps-block--final-screen">
               <div class="steps-header">
                 Добро пожаловать
@@ -211,7 +215,7 @@
                 <div class="onboarding__percent-counter">
                   100%
                 </div>
-                
+
                 <div class="game-loader">
                   <!-- <div class="game-loader__background"></div> -->
                   <div class="game-loader__planet">
@@ -226,14 +230,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                       <defs>
                         <filter id="goo">
-                          <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+                          <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur"/>
                           <feColorMatrix
                             in="blur"
                             mode="matrix"
                             values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -7"
                             result="goo"
                           />
-                          <feBlend in="SourceGraphic" in2="goo" />
+                          <feBlend in="SourceGraphic" in2="goo"/>
                         </filter>
                       </defs>
                     </svg>
@@ -243,8 +247,8 @@
               </div>
 
 
-<!--              <button class="testBtn">click</button>-->
-              
+              <!--              <button class="testBtn">click</button>-->
+
               <h2 class="onboarding--final-step-subtitle">Aspectum.app</h2>
               <div class="steps-subheader ">Пока идет расчет натальной карты и персональных рекомендаций, расскажем вам
                 о самых важных функциях
@@ -290,13 +294,15 @@
           <div class="onboarding__coord-inputs">
             <div>
               <label for="onboarding__lat-input" class="onboarding-labels onboarding__coord-inputs-label">Широта</label>
-              <input class="text-input" type="text" id="onboarding__lat-input" placeholder="00.0000" autocomplete="off">
+              <input class="text-input text-input--coords " type="text" id="onboarding__lat-input" placeholder="00.0000"
+                     autocomplete="off">
             </div>
 
             <div>
               <label for="onboarding__lng-input"
                      class="onboarding-labels onboarding__coord-inputs-label">Долгота</label>
-              <input class="text-input" type="text" id="onboarding__lng-input" placeholder="00.0000" autocomplete="off">
+              <input class="text-input text-input--coords" type="text" id="onboarding__lng-input" placeholder="00.0000"
+                     autocomplete="off">
             </div>
 
 
