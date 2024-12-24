@@ -85,7 +85,7 @@ function initRegistration() {
 // Объединяем все шаги в один массив
   const allSteps = [...steps, step3, step4];
 
-  let currentStep = 5; // Индекс текущего шага
+  let currentStep = 2; // Индекс текущего шага
   let selectedGender = "male"; // Выбранный пол
 
 // Функция обновления видимости шагов
@@ -392,7 +392,7 @@ const populatePopularCities = (citiesList) => {
   onboardingPopularCitiesList.innerHTML = '';
   citiesList.forEach(city => {
     const listItem = document.createElement('li');
-    listItem.textContent = city.name;
+    listItem.textContent = `${city.name}${city.region ? ", " + city.region : '' }`;
     listItem.dataset.cityId = city.id;
     listItem.dataset.lat = city.latitude || "";  // пока так, потом todo
     listItem.dataset.lng = city.longitude || ""; // пока так, потом todo
@@ -480,8 +480,6 @@ cityInput.addEventListener('click', (e) => {
 
   setEventListenerOnCityItems()
 
-
-  //
   onboardingCityInPopupInput.addEventListener('focus', (e) => {
     onboardingPopularCitiesWrapper.style.display = 'block'
     onboardingPopularCitiesLabel.textContent = 'Начните вводить название города...'
