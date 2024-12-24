@@ -26,6 +26,8 @@ const onboardingPopularCitiesWrapper = document.querySelector('.onboarding__popu
 const onboardingCoordLabel = document.querySelector('.onboarding__coord-label')
 const onboardingPopularCitiesLabel = document.querySelector('.onboarding__popular-cities-label')
 const onboardingPopularCitiesList = document.querySelector('.onboarding__popular-cities');
+// const testBtn = document.querySelector('.testBtn');
+
 
 
 const header = document.querySelector('.header')
@@ -45,6 +47,14 @@ let onboardingCurrentCityId = null
 header.style.display = 'none'
 tabbar.style.display = 'none'
 document.body.style.overflow = 'hidden'
+
+
+
+// testBtn.addEventListener('click', ()=>{
+//   console.log('hello')
+//   launchPercentCounter()
+// })
+
 
 function initRegistration() {
 
@@ -327,6 +337,10 @@ function initRegistration() {
           // location.hash = '/';
           currentStep = 5
           updateSteps()
+          
+          launchPercentCounter()
+          
+          
         } else {
           // Обработка ошибок         
           alert(result.error);
@@ -339,6 +353,25 @@ function initRegistration() {
 
 // Инициализация
   updateSteps();
+}
+
+// При переходе к последнему шагу - проценты в теч. минуты меняются от 0 до 100:
+const launchPercentCounter = () => {
+  const onboardingPercentCounter = document.querySelector('.onboarding__percent-counter');
+
+  let currentPercentValue = 0
+  
+  const intervalId = setInterval(()=>{
+    if (currentPercentValue < 100) {
+      currentPercentValue = currentPercentValue + 1
+      onboardingPercentCounter.textContent =  currentPercentValue + "%"
+      
+    } else {
+      clearInterval(intervalId);
+    }
+    
+  }, 100)
+  
 }
 
 
@@ -455,7 +488,6 @@ cityInput.addEventListener('click', (e) => {
     onboardingCoordLabel.style.display = 'block'
     onboardingCityPopupBtn.disabled = false
     onboardingPopularCitiesList.innerHTML = ''
-
     onboardingCurrentCityId = null
     onboardingCoords = null
   })

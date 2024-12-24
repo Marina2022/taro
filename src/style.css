@@ -1,4 +1,3 @@
-
 /* Стили регистрации */
 
 
@@ -36,8 +35,8 @@
     flex-direction: column;
     gap: 8px;
     position: relative;
-    
-    
+
+
 }
 
 .steps-block {
@@ -411,13 +410,13 @@ input[type="number"] {
 }
 
 .onboarding__final-step-overlay {
-    /*background-image: url('img/bg-stars-rounds.png');  Черный потом сюда вставим */  
+    /*background-image: url('img/bg-stars-rounds.png');  Черный потом сюда вставим */
     background-image: none;
     background-color: black; /* Базовый цвет фона */
-    
-    
+
+
     /*Это все убрать, наверное, нужно будет: todo*/
-    
+
     /*background-image: url('img/galact.png'), !* Верхнее изображение *! url('img/background.png'); !* Нижнее изображение *!*/
     /*background-repeat: no-repeat, repeat; !* Настройка повторения для обоих изображений *!*/
     /*background-position: center calc(50% - 100px), center; !* Центрирование обоих изображений *!*/
@@ -516,7 +515,7 @@ input[type="number"] {
 
 .onboarding__popular-cities {
     height: 210px;
-    overflow: auto;    
+    overflow: auto;
     list-style: none;
 }
 
@@ -535,7 +534,7 @@ input[type="number"] {
 
 /* Стиль для "ползунка" скроллбара */
 .onboarding__popular-cities::-webkit-scrollbar-thumb {
-    background-color: rgb(255 255 255 /.2); 
+    background-color: rgb(255 255 255 /.2);
     border-radius: 8px; /* Скругленные углы */
 
 }
@@ -587,36 +586,37 @@ input[type="number"] {
 }
 
 
-
 /****************************************/
+
 /*Анимация*/
 
-
-
+/* Переменная для величины родительского блока, внутри которого будет анимация - от этого размера будут рассчитываться анимация  */
 :root {
     --anim-size: 375px; /* Значение по умолчанию */
 }
 
 @media (max-width: 500px) {
     :root {
-        --anim-size: 92vw; /* Новое значение при ширине экрана меньше 500px */
+        --anim-size: 90vw; /* Новое значение при ширине экрана меньше 500px */
     }
 }
 
+/*родительский блок для анимации*/
 .onboarding__animation {
-
-  
-   
-    
-    /*border: #E8E4E9 2px solid;*/
-   
     width: 375px;
     height: 375px;
-
     position: fixed;
     position: absolute;
-    top: 0;
+    top: 40px;
     left: 0;
+}
+
+@media (max-width: 500px) {
+    .onboarding__animation {
+        width: 90vw;
+        height: 90vw;
+        top: 10vw;
+    }
 }
 
 .game-loader__btn {
@@ -634,15 +634,18 @@ input[type="number"] {
     padding: 0.5em 1em;
     transition: 1s;
 }
+
 .game-loader__btn:hover {
     background: #11dbd9;
 }
+
 .game-loader__planet {
     filter: url('#goo');
     position: relative;
     width: 100%;
     height: 100%;
 }
+
 .game-loader__planet::after {
     content: '';
     display: block;
@@ -657,6 +660,7 @@ input[type="number"] {
     left: 46%;
     animation: scale 16s linear infinite, color5 8s linear 1;
 }
+
 .game-loader__planet .loader-mini1 {
     position: absolute;
     width: 3%;
@@ -667,6 +671,7 @@ input[type="number"] {
     left: 48.5%;
     animation: move1 8s linear 1, color1 8s linear 1;
 }
+
 .game-loader__planet .loader-mini2 {
     position: absolute;
     width: 3.6%;
@@ -677,6 +682,7 @@ input[type="number"] {
     left: 48.5%;
     animation: move2 9s linear 1, color2 9s linear 1;
 }
+
 .game-loader__planet .loader-mini3 {
     position: absolute;
     width: 4.2%;
@@ -687,6 +693,7 @@ input[type="number"] {
     left: 48.5%;
     animation: move3 10s linear 1, color3 10s linear 1;
 }
+
 .game-loader__planet .loader-mini4 {
     position: absolute;
     width: 4.8%;
@@ -697,6 +704,7 @@ input[type="number"] {
     left: 48.5%;
     animation: move4 11s linear 1, color4 11s linear 1;
 }
+
 .game-loader__planet .loader-radius1 {
     position: absolute;
     width: 12%;
@@ -710,6 +718,7 @@ input[type="number"] {
     transform: scale(0);
     animation: orbit1 8s linear 1;
 }
+
 .game-loader__planet .loader-radius2 {
     position: absolute;
     width: 18%;
@@ -723,6 +732,7 @@ input[type="number"] {
     left: 41%;
     animation: orbit2 9s linear 1;
 }
+
 .game-loader__planet .loader-radius3 {
     position: absolute;
     width: 24%;
@@ -736,6 +746,7 @@ input[type="number"] {
     left: 38%;
     animation: orbit3 10s linear 1;
 }
+
 .game-loader__planet .loader-radius4 {
     position: absolute;
     width: 30%;
@@ -749,21 +760,27 @@ input[type="number"] {
     left: 35%;
     animation: orbit4 11s linear 1;
 }
+
 .game-loader__planet--color .loader-mini1 {
     background: #0fc3c2;
 }
+
 .game-loader__planet--color .loader-mini2 {
     background: #0dacaa;
 }
+
 .game-loader__planet--color .loader-mini3 {
     background: #0b9493;
 }
+
 .game-loader__planet--color .loader-mini4 {
     background: #0a7c7b;
 }
+
 .btn-play {
     left: 41vw;
 }
+
 @keyframes move1 {
     0% {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
@@ -774,7 +791,7 @@ input[type="number"] {
     }
     25% {
         /*transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size)*(-12%)/100)) rotate(-360deg) skewX(-5deg) rotate(360deg);*/
-        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-12) / 100))  rotate(-360deg) skewX(-5deg) rotate(360deg);
+        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-12) / 100)) rotate(-360deg) skewX(-5deg) rotate(360deg);
     }
     50% {
         transform: skewX(5deg) rotate(720deg) translateY(calc(var(--anim-size) * (-12) / 100)) skewX(-5deg) rotate(720deg);
@@ -791,6 +808,7 @@ input[type="number"] {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
     }
 }
+
 @keyframes move2 {
     0% {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
@@ -814,6 +832,7 @@ input[type="number"] {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
     }
 }
+
 @keyframes move3 {
     0% {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
@@ -837,6 +856,7 @@ input[type="number"] {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
     }
 }
+
 @keyframes move4 {
     0% {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
@@ -860,6 +880,7 @@ input[type="number"] {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
     }
 }
+
 @keyframes scale {
     0% {
         transform: scale(1.5);
@@ -871,6 +892,7 @@ input[type="number"] {
         transform: scale(1.5);
     }
 }
+
 @keyframes orbit1 {
     0% {
         transform: scale(0);
@@ -900,6 +922,7 @@ input[type="number"] {
         transform: scale(0);
     }
 }
+
 @keyframes orbit2 {
     0% {
         transform: scale(0);
@@ -929,6 +952,7 @@ input[type="number"] {
         transform: scale(0);
     }
 }
+
 @keyframes orbit3 {
     0% {
         transform: scale(0);
@@ -958,6 +982,7 @@ input[type="number"] {
         transform: scale(0);
     }
 }
+
 @keyframes orbit4 {
     0% {
         transform: scale(0);
@@ -987,6 +1012,7 @@ input[type="number"] {
         transform: scale(0);
     }
 }
+
 @keyframes color1 {
     10% {
         background: #11dbd9;
@@ -998,6 +1024,7 @@ input[type="number"] {
         background: #11dbd9;
     }
 }
+
 @keyframes color2 {
     10% {
         background: #11dbd9;
@@ -1009,6 +1036,7 @@ input[type="number"] {
         background: #11dbd9;
     }
 }
+
 @keyframes color3 {
     10% {
         background: #11dbd9;
@@ -1020,6 +1048,7 @@ input[type="number"] {
         background: #11dbd9;
     }
 }
+
 @keyframes color4 {
     10% {
         background: #11dbd9;
@@ -1031,6 +1060,7 @@ input[type="number"] {
         background: #11dbd9;
     }
 }
+
 @keyframes color5 {
     10% {
         background: #11dbd9;
@@ -1046,21 +1076,18 @@ input[type="number"] {
     }
 }
 
-
 .game-loader {
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 10000;
+    /*z-index: 1;*/
     display: flex;
     align-items: center;
     justify-content: center;
     /*overflow: hidden;*/
 }
-
-
 
 .onboarding__anim-svg {
     width: 100%;
@@ -1069,5 +1096,32 @@ input[type="number"] {
     z-index: -100;
     pointer-events: none;
 }
- 
 
+
+/*Счетчик процентов поверх анимации на последнем шаге*/
+
+.onboarding__percent-counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 40px;
+    height: 40px;
+
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 18px;
+    margin-left: 2px;
+    font-weight: 500;
+}
+
+.testBtn {
+    position: relative;
+    z-index: 100;
+    cursor: pointer;
+    padding-block: 10px;
+}
