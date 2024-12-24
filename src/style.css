@@ -1,4 +1,6 @@
+
 /* Стили регистрации */
+
 
 .steps-block {
     display: flex;
@@ -33,8 +35,9 @@
     display: none;
     flex-direction: column;
     gap: 8px;
-    /*margin: 24px 0;*/
-    /*margin-top: 0;*/
+    position: relative;
+    
+    
 }
 
 .steps-block {
@@ -586,30 +589,41 @@ input[type="number"] {
 
 
 /****************************************/
+/*Анимация*/
 
+
+
+:root {
+    --anim-size: 375px; /* Значение по умолчанию */
+}
+
+@media (max-width: 500px) {
+    :root {
+        --anim-size: 92vw; /* Новое значение при ширине экрана меньше 500px */
+    }
+}
 
 .onboarding__animation {
-    /*transform: scale(.5);*/
-}
 
-.game-loader {
-    width: 100vw;
-    height: 100vh;
+  
+   
+    
+    /*border: #E8E4E9 2px solid;*/
+   
+    width: 375px;
+    height: 375px;
+
     position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #273355;
 }
+
 .game-loader__btn {
     position: fixed;
     outline: none;
-    min-width: 16vw;
-    min-height: 4vw;
+    min-width: 16%;
+    min-height: 4%;
     bottom: 10vh;
     z-index: 10001;
     background: transparent;
@@ -626,113 +640,113 @@ input[type="number"] {
 .game-loader__planet {
     filter: url('#goo');
     position: relative;
-    width: 100vw;
-    height: 100vw;
+    width: 100%;
+    height: 100%;
 }
 .game-loader__planet::after {
     content: '';
     display: block;
-    width: 8vw;
-    height: 8vw;
+    width: 8%;
+    height: 8%;
     border-radius: 50%;
     background: #11dbd9;
     box-shadow: #11dbd9 0 0 24px 4px;
     margin: 0 auto;
     position: absolute;
-    top: 46vw;
-    left: 46vw;
+    top: 46%;
+    left: 46%;
     animation: scale 16s linear infinite, color5 8s linear 1;
 }
 .game-loader__planet .loader-mini1 {
     position: absolute;
-    width: 3vw;
-    height: 3vw;
+    width: 3%;
+    height: 3%;
     border-radius: 50%;
     background: #11dbd9;
-    top: 48.5vw;
-    left: 48.5vw;
+    top: 48.5%;
+    left: 48.5%;
     animation: move1 8s linear 1, color1 8s linear 1;
 }
 .game-loader__planet .loader-mini2 {
     position: absolute;
-    width: 3.6vw;
-    height: 3.6vw;
+    width: 3.6%;
+    height: 3.6%;
     border-radius: 50%;
     background: #11dbd9;
-    top: 48.5vw;
-    left: 48.5vw;
+    top: 48.5%;
+    left: 48.5%;
     animation: move2 9s linear 1, color2 9s linear 1;
 }
 .game-loader__planet .loader-mini3 {
     position: absolute;
-    width: 4.2vw;
-    height: 4.2vw;
+    width: 4.2%;
+    height: 4.2%;
     border-radius: 50%;
     background: #11dbd9;
-    top: 48.5vw;
-    left: 48.5vw;
+    top: 48.5%;
+    left: 48.5%;
     animation: move3 10s linear 1, color3 10s linear 1;
 }
 .game-loader__planet .loader-mini4 {
     position: absolute;
-    width: 4.8vw;
-    height: 4.8vw;
+    width: 4.8%;
+    height: 4.8%;
     border-radius: 50%;
     background: #11dbd9;
-    top: 48.5vw;
-    left: 48.5vw;
+    top: 48.5%;
+    left: 48.5%;
     animation: move4 11s linear 1, color4 11s linear 1;
 }
 .game-loader__planet .loader-radius1 {
     position: absolute;
-    width: 12vw;
-    height: 12vw;
+    width: 12%;
+    height: 12%;
     border-radius: 50%;
     border: 0.5px solid #11dbd9;
     opacity: 0.2;
     background: transparent;
-    top: 44vw;
-    left: 44vw;
+    top: 44%;
+    left: 44%;
     transform: scale(0);
     animation: orbit1 8s linear 1;
 }
 .game-loader__planet .loader-radius2 {
     position: absolute;
-    width: 18vw;
-    height: 18vw;
+    width: 18%;
+    height: 18%;
     border-radius: 50%;
     border: 0.5px solid #11dbd9;
     opacity: 0.2;
     background: transparent;
     transform: scale(0);
-    top: 41vw;
-    left: 41vw;
+    top: 41%;
+    left: 41%;
     animation: orbit2 9s linear 1;
 }
 .game-loader__planet .loader-radius3 {
     position: absolute;
-    width: 24vw;
-    height: 24vw;
+    width: 24%;
+    height: 24%;
     border-radius: 50%;
     border: 0.5px solid #11dbd9;
     opacity: 0.2;
     background: transparent;
     transform: scale(0);
-    top: 38vw;
-    left: 38vw;
+    top: 38%;
+    left: 38%;
     animation: orbit3 10s linear 1;
 }
 .game-loader__planet .loader-radius4 {
     position: absolute;
-    width: 30vw;
-    height: 30vw;
+    width: 30%;
+    height: 30%;
     border-radius: 50%;
     border: 0.5px solid #11dbd9;
     opacity: 0.2;
     background: transparent;
     transform: scale(0);
-    top: 35vw;
-    left: 35vw;
+    top: 35%;
+    left: 35%;
     animation: orbit4 11s linear 1;
 }
 .game-loader__planet--color .loader-mini1 {
@@ -755,19 +769,23 @@ input[type="number"] {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
     }
     10% {
-        transform: skewX(5deg) rotate(180deg) translateY(-6vw) rotate(-180deg) skewX(-5deg) rotate(180deg);
+        /*transform: skewX(5deg) rotate(180deg) translateY(calc(var(--anim-size)*(-6%)/100)) rotate(-180deg) skewX(-5deg) rotate(180deg);*/
+        transform: skewX(5deg) rotate(180deg) translateY(calc(var(--anim-size) * (-6) / 100)) rotate(-180deg) skewX(-5deg) rotate(180deg);
     }
     25% {
-        transform: skewX(5deg) rotate(360deg) translateY(-12vw) rotate(-360deg) skewX(-5deg) rotate(360deg);
+        /*transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size)*(-12%)/100)) rotate(-360deg) skewX(-5deg) rotate(360deg);*/
+        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-12) / 100))  rotate(-360deg) skewX(-5deg) rotate(360deg);
     }
     50% {
-        transform: skewX(5deg) rotate(720deg) translateY(-12vw) rotate(720deg) skewX(-5deg) rotate(720deg);
+        transform: skewX(5deg) rotate(720deg) translateY(calc(var(--anim-size) * (-12) / 100)) skewX(-5deg) rotate(720deg);
     }
     75% {
-        transform: skewX(5deg) rotate(1080deg) translateY(-12vw) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
+        /*transform: skewX(5deg) rotate(1080deg) translateY(-12%) rotate(-1080deg) skewX(-5deg) rotate(1080deg);*/
+        transform: skewX(5deg) rotate(1080deg) translateY(calc(var(--anim-size) * (-12) / 100)) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
     }
     90% {
-        transform: skewX(5deg) rotate(1260deg) translateY(-6vw) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
+        /*transform: skewX(5deg) rotate(1260deg) translateY(-6%) rotate(-1260deg) skewX(-5deg) rotate(1260deg);*/
+        transform: skewX(5deg) rotate(1260deg) translateY(calc(var(--anim-size) * (-6) / 100)) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
     }
     100% {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
@@ -778,19 +796,19 @@ input[type="number"] {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
     }
     10% {
-        transform: skewX(5deg) rotate(180deg) translateY(-9vw) rotate(-180deg) skewX(-5deg) rotate(180deg);
+        transform: skewX(5deg) rotate(180deg) translateY(calc(var(--anim-size) * (-9) / 100)) rotate(-180deg) skewX(-5deg) rotate(180deg);
     }
     25% {
-        transform: skewX(5deg) rotate(360deg) translateY(-18vw) rotate(-360deg) skewX(-5deg) rotate(360deg);
+        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-18) / 100)) rotate(-360deg) skewX(-5deg) rotate(360deg);
     }
     50% {
-        transform: skewX(5deg) rotate(720deg) translateY(-18vw) rotate(720deg) skewX(-5deg) rotate(720deg);
+        transform: skewX(5deg) rotate(720deg) translateY(calc(var(--anim-size) * (-18) / 100)) rotate(720deg) skewX(-5deg) rotate(720deg);
     }
     75% {
-        transform: skewX(5deg) rotate(1080deg) translateY(-18vw) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
+        transform: skewX(5deg) rotate(1080deg) translateY(calc(var(--anim-size) * (-18) / 100)) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
     }
     90% {
-        transform: skewX(5deg) rotate(1260deg) translateY(-9vw) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
+        transform: skewX(5deg) rotate(1260deg) translateY(calc(var(--anim-size) * (-9) / 100)) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
     }
     100% {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
@@ -801,19 +819,19 @@ input[type="number"] {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
     }
     10% {
-        transform: skewX(5deg) rotate(180deg) translateY(-12vw) rotate(-180deg) skewX(-5deg) rotate(180deg);
+        transform: skewX(5deg) rotate(180deg) translateY(calc(var(--anim-size) * (-12) / 100)) rotate(-180deg) skewX(-5deg) rotate(180deg);
     }
     25% {
-        transform: skewX(5deg) rotate(360deg) translateY(-24vw) rotate(-360deg) skewX(-5deg) rotate(360deg);
+        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-24) / 100)) rotate(-360deg) skewX(-5deg) rotate(360deg);
     }
     50% {
-        transform: skewX(5deg) rotate(720deg) translateY(-24vw) rotate(720deg) skewX(-5deg) rotate(720deg);
+        transform: skewX(5deg) rotate(720deg) translateY(calc(var(--anim-size) * (-24) / 100)) rotate(720deg) skewX(-5deg) rotate(720deg);
     }
     75% {
-        transform: skewX(5deg) rotate(1080deg) translateY(-24vw) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
+        transform: skewX(5deg) rotate(1080deg) translateY(calc(var(--anim-size) * (-24) / 100)) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
     }
     90% {
-        transform: skewX(5deg) rotate(1260deg) translateY(-12vw) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
+        transform: skewX(5deg) rotate(1260deg) translateY(calc(var(--anim-size) * (-12) / 100)) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
     }
     100% {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
@@ -824,19 +842,19 @@ input[type="number"] {
         transform: skewX(5deg) rotate(0deg) translateY(0em) rotate(0deg) skewX(-5deg) rotate(0deg);
     }
     10% {
-        transform: skewX(5deg) rotate(180deg) translateY(-15vw) rotate(-180deg) skewX(-5deg) rotate(180deg);
+        transform: skewX(5deg) rotate(180deg) translateY(calc(var(--anim-size) * (-15) / 100)) rotate(-180deg) skewX(-5deg) rotate(180deg);
     }
     25% {
-        transform: skewX(5deg) rotate(360deg) translateY(-30vw) rotate(-360deg) skewX(-5deg) rotate(360deg);
+        transform: skewX(5deg) rotate(360deg) translateY(calc(var(--anim-size) * (-30) / 100)) skewX(-5deg) rotate(360deg);
     }
     50% {
-        transform: skewX(5deg) rotate(720deg) translateY(-30vw) rotate(720deg) skewX(-5deg) rotate(720deg);
+        transform: skewX(5deg) rotate(720deg) translateY(calc(var(--anim-size) * (-30) / 100)) rotate(720deg) skewX(-5deg) rotate(720deg);
     }
     75% {
-        transform: skewX(5deg) rotate(1080deg) translateY(-30vw) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
+        transform: skewX(5deg) rotate(1080deg) translateY(calc(var(--anim-size) * (-30) / 100)) rotate(-1080deg) skewX(-5deg) rotate(1080deg);
     }
     90% {
-        transform: skewX(5deg) rotate(1260deg) translateY(-15vw) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
+        transform: skewX(5deg) rotate(1260deg) translateY(calc(var(--anim-size) * (-15) / 100)) rotate(-1260deg) skewX(-5deg) rotate(1260deg);
     }
     100% {
         transform: skewX(5deg) rotate(1440deg) translateY(0em) rotate(-1440deg) skewX(-5deg) rotate(1440deg);
@@ -1027,19 +1045,26 @@ input[type="number"] {
         box-shadow: #11dbd9 0 0 24px 4px;
     }
 }
+
+
 .game-loader {
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
-svg {
+
+
+
+.onboarding__anim-svg {
+    width: 100%;
+    height: 100%;
     position: absolute;
     z-index: -100;
     pointer-events: none;

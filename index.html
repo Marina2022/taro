@@ -196,12 +196,8 @@
 
         <div id="step5-screen" class="step-screen">
           <div id="step5" class="step">
-            
-            <div class="anim">
-              
-              
-            </div>
-            
+
+                        
             
             <div class="steps-block steps-block--final-screen">
               <div class="steps-header">
@@ -211,6 +207,43 @@
                 Мы отправили пароль на ваш email
               </div>
 
+              <div class="onboarding__animation">
+                <div class="game-loader">
+                  <!-- <div class="game-loader__background"></div> -->
+                  <div class="game-loader__planet">
+                    <div class="loader-radius1"></div>
+                    <div class="loader-radius2"></div>
+                    <div class="loader-radius3"></div>
+                    <div class="loader-radius4"></div>
+                    <div class="loader-mini1"></div>
+                    <div class="loader-mini2"></div>
+                    <div class="loader-mini3"></div>
+                    <div class="loader-mini4"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                      <defs>
+                        <filter id="goo">
+                          <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+                          <feColorMatrix
+                            in="blur"
+                            mode="matrix"
+                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -7"
+                            result="goo"
+                          />
+                          <feBlend in="SourceGraphic" in2="goo" />
+                        </filter>
+                      </defs>
+                    </svg>
+                  </div>
+                  <!-- <button class="game-loader__btn btn-play">OMG! It works</button> -->
+                </div>
+
+
+              </div>
+              
+              
+
+              
+              
               <h2 class="onboarding--final-step-subtitle">Aspectum.app</h2>
               <div class="steps-subheader ">Пока идет расчет натальной карты и персональных рекомендаций, расскажем вам
                 о самых важных функциях
