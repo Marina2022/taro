@@ -31,7 +31,6 @@ const onboardingPopularCitiesList = document.querySelector('.onboarding__popular
 // const testBtn = document.querySelector('.testBtn');
 
 
-
 const header = document.querySelector('.header')
 const tabbar = document.querySelector('.tabbar')
 
@@ -49,7 +48,6 @@ let onboardingCurrentCityId = null
 header.style.display = 'none'
 tabbar.style.display = 'none'
 document.body.style.overflow = 'hidden'
-
 
 
 // testBtn.addEventListener('click', ()=>{
@@ -99,8 +97,8 @@ function initRegistration() {
     });
 
     if (currentStep < 3) {
-      
-       
+
+
       stepsContainer.style.display = "block";
       stepHeader.style.display = "block";
       step3Screen.style.display = "none";
@@ -112,7 +110,7 @@ function initRegistration() {
         if (index < currentStep) {
           // step.classList.add("completed");
           step.classList.add("active");
-          
+
           // inputs.forEach(input => input.setAttribute("disabled", "true"));
         } else if (index === currentStep) {
           step.classList.add("active");
@@ -126,12 +124,11 @@ function initRegistration() {
         step1.classList.remove('active')
         step2.classList.remove('active')
       }
-      
-      
+
 
       // Обновить шаг в заголовке
-      
-      
+
+
       // currentStepIndicator.innerText = currentStep + 1;
       currentStepIndicator.innerText = currentStep;
 
@@ -254,7 +251,7 @@ function initRegistration() {
 
       birth_date = `${birthYear}-${addLeadingZero(birthMonth)}-${addLeadingZero(birthDay)}`
 
-    } else if (step === 1) {
+      // } else if (step === 1) {
       const birthTimeValue = document.getElementById("birth_time").value;
 
       const timeArray = birthTimeValue.split(':')
@@ -272,7 +269,7 @@ function initRegistration() {
 
     } else if (step === 2) {
       const country = document.getElementById("country").value;
-      
+
       // const city = document.getElementById("onboardingCity").textContent;
 
       // if (!country) {
@@ -283,11 +280,11 @@ function initRegistration() {
       //   alert("Пожалуйста, выберите страну из списка");
       //   return false;
       // }
-      
+
       if (!onboardingCurrentCityId) {
         alert("Пожалуйста, укажите место рождения.");
         return false;
-      } 
+      }
     } else if (step === 3) {
       const nickname = document.getElementById("nickname").value;
       if (!nickname) {
@@ -326,7 +323,7 @@ function initRegistration() {
 
 // Функция отправки данных регистрации на сервер
   function submitRegistration() {
-    
+
     const data = {
       birth_date,
       birth_time: document.getElementById("birth_time").value,
@@ -356,11 +353,11 @@ function initRegistration() {
           currentStep = 5
           updateSteps()
           launchPercentCounter()
-          
-                              
+
+
         } else {
           // Обработка ошибок    
-          
+
           throw new Error(result.error)
           // alert(result.error);
         }
@@ -380,18 +377,16 @@ const launchPercentCounter = () => {
   const onboardingPercentCounter = document.querySelector('.onboarding__percent-counter');
 
   let currentPercentValue = 0
-  
-  const intervalId = setInterval(()=>{
+
+  const intervalId = setInterval(() => {
     if (currentPercentValue < 100) {
       currentPercentValue = currentPercentValue + 1
-      onboardingPercentCounter.textContent =  currentPercentValue + "%"
-      
+      onboardingPercentCounter.textContent = currentPercentValue + "%"
+
     } else {
       clearInterval(intervalId);
     }
-    
-  }, 100)
-  
+  }, 1000)
 }
 
 
@@ -412,7 +407,7 @@ const populatePopularCities = (citiesList) => {
   onboardingPopularCitiesList.innerHTML = '';
   citiesList.forEach(city => {
     const listItem = document.createElement('li');
-    listItem.textContent = `${city.name}${city.region ? ", " + city.region : '' }`;
+    listItem.textContent = `${city.name}${city.region ? ", " + city.region : ''}`;
     listItem.dataset.cityId = city.id;
     listItem.dataset.lat = city.latitude || "";  // пока так, потом todo
     listItem.dataset.lng = city.longitude || ""; // пока так, потом todo
@@ -517,7 +512,7 @@ cityInput.addEventListener('click', (e) => {
 
     fetch(url).then(res => res.json().then(val => {
       populatePopularCities(val)
-      cities = val
+      // cities = val
     }))
       .catch(error => {
         console.error('Ошибка:', error);

@@ -49,6 +49,8 @@
               </label>
 
               <div class="data-inputs-wrapper">
+                <input id="birth-day" type="number" class="text-input text-input--birth-day" placeholder="День" min="1"
+                       max="31">
                 <div class="input-icon-container input-icon-container--month">
                   <select required id="birth-month" class="onboarding-select onboarding-select--month">
                     <!--                    <option value="Месяц" disabled selected class="select-placeholder">Месяц</option>-->
@@ -66,10 +68,8 @@
                     <option value="12">Декабрь</option>
                   </select>
                   <div class="input-icon select-icon"></div>
-                </div>
-                <input id="birth-day" type="number" class="text-input text-input--birth-time" placeholder="День" min="1"
-                       max="31">
-                <input id="birth-year" type="number" class="text-input text-input--birth-time" placeholder="Год"
+                </div>                
+                <input id="birth-year" type="number" class="text-input text-input--birth-year" placeholder="Год"
                        maxlength="4">
               </div>
             </div>
@@ -88,6 +88,9 @@
                     fill="white"/>
                 </svg>
               </div>
+              <label class="onboarding-labels onboarding__comment-label" >
+                * введите 12:00 если не знаете точное время
+              </label>
 
             </div>
 
@@ -140,13 +143,13 @@
                 </label>
                 <input id="nickname" type="text" class="text-input onboarding__nickname-input">
 
-                <label class="onboarding-labels" for="nickname">
+                <label class="onboarding-labels">
                   Пол
                 </label>
                 <div class="gender-options">
-                  <button class="gender-button active" data-gender="male">Мужской</button>
-                  <button class="gender-button" data-gender="female">Женский</button>
-                  <button class="gender-button" data-gender="other">Небинарный</button>
+                  <button type="button" class="gender-button active" data-gender="male">Мужской</button>
+                  <button type="button" class="gender-button" data-gender="female">Женский</button>
+                  <button type="button" class="gender-button" data-gender="other">Небинарный</button>
                 </div>
               </div>
             </div>
@@ -164,7 +167,7 @@
               </div>
 
               <div class="step active">
-                <label class="onboarding-labels" for="email">
+                <label class="onboarding-labels onboarding-labels--email" for="email">
                   Ваш E-MAIL (используется как логин)
                 </label>
                 <input id="email" type="email" class="text-input onboarding__email-input">
